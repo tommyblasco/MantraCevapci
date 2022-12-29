@@ -8,6 +8,28 @@ Created on Wed Oct 14 11:31:20 2020
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta, date
+import streamlit as st
+
+@st.cache
+def load_data(df):
+    l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";")
+    return l_data
+
+ruolo=load_data("Ruolo")
+campionato=load_data("Campionato")
+giocatori=load_data("Giocatori")
+deco_prizes=load_data("Deco_prizes")
+premi_extra=load_data("Premi_extra")
+mercato=load_data("Mercato")
+quotazioni=load_data("Quotazioni_new")
+voti=load_data("Voti_new")
+moduli=load_data("Moduli")
+
+voti['Data']=voti['Data'].apply(pd.to_datetime)
+mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
+ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
+ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
+ruoli_att=['W; A','W; T; A','T; A','A','PC']
 
 #voti con stipendi e fv
 def voti_arricchiti():
@@ -55,8 +77,8 @@ def ranking(seas):
 #bilancio
 def billato(seas):
     mercato=mercato[mercato['Stagione']==seas]
-    ms=sum(voti_arricchiti().loc[(voti_arricchiti()['Squadra']!='') & (voti_arricchiti()['Stagione']==seas),'Stipendio'])
-    cl_pre=pd.merge(ranking(seas),premi_extra[premi_extra['Stagione']==seas],on=['Squadra'],how='left')
+    ms=sum(voti_arricchiti(voti,ruolo,mercato).loc[(voti_arricchiti(voti,ruolo,mercato)['Squadra']!='') & (voti_arricchiti(voti,ruolo,mercato)['Stagione']==seas),'Stipendio'])
+    cl_pre=pd.merge(ranking(seas,campionato),premi_extra[premi_extra['Stagione']==seas],on=['Squadra'],how='left')
     cl_pre_d=pd.merge(cl_pre,deco_prizes[deco_prizes['Stagione']==seas],on=['Pos'],how='left')
     cl_pre_d['Stipendio']=[ms]*cl_pre_d.shape[0]
     cl_pre_d['Prize_Cup']=cl_pre_d['Prize_Cup'].fillna(0)
@@ -143,7 +165,7 @@ def rosa_oggi(team):
 
 #b11
 def b11(seas,gio):
-    v_rist = voti_arricchiti()[['Nome','Ruolo','FV','Giornata','Squadra']]
+    v_rist = voti_arricchiti(voti,ruolo,mercato)[['Nome','Ruolo','FV','Giornata','Squadra']]
     v = v_rist[(v_rist['Giornata'] == gio) & (pd.notnull(v_rist['Squadra']))]
 
     m = moduli[moduli['Stagione'] == seas]
