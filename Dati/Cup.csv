@@ -1,0 +1,537 @@
+﻿Stagione;Gruppo;Giornata;Sq casa;Sq tras;Gol casa;Gol tras;Pnt casa;Pnt tras
+2019-20;A;1;Vanndoria;CSKA Moscow Mule;0;0;60,5;64
+2019-20;A;1;Olympique Bidet;Parter;1;0;63;0
+2019-20;B;1;Big Black Cimamori;Agghiaggiande;1;0;61,5;0
+2019-20;B;1;ACDF;FK Partizena;1;2;67;71,5
+2019-20;A;2;Parter;Vanndoria;2;1;72;66
+2019-20;A;2;Der Holzfaller;Olympique Bidet;0;2;65;73,5
+2019-20;B;2;FK Partizena;Big Black Cimamori;0;1;65;70
+2019-20;B;2;Agghiaggiande;Los Angeles Showtime;2;1;73,5;68
+2019-20;A;3;Vanndoria;Olympique Bidet;1;1;70,5;67,5
+2019-20;A;3;CSKA Moscow Mule;Der Holzfaller;0;0;65;57
+2019-20;B;3;Los Angeles Showtime;FK Partizena;0;1;50;64
+2019-20;B;3;Big Black Cimamori;ACDF;1;0;69,5;62
+2019-20;A;4;Parter;CSKA Moscow Mule;2;2;73;74,5
+2019-20;A;4;Vanndoria;Der Holzfaller;0;1;61;70
+2019-20;B;4;FK Partizena;Agghiaggiande;1;1;66;66,5
+2019-20;B;4;ACDF;Los Angeles Showtime;1;2;70,5;72
+2019-20;A;5;Der Holzfaller;Parter;4;6;84;93
+2019-20;A;5;CSKA Moscow Mule;Olympique Bidet;0;1;64;69,5
+2019-20;B;5;Los Angeles Showtime;Big Black Cimamori;0;0;59,5;63
+2019-20;B;5;Agghiaggiande;ACDF;1;1;66;67,5
+2019-20;A;6;CSKA Moscow Mule;Vanndoria;1;0;70,5;65,5
+2019-20;A;6;Parter;Olympique Bidet;2;4;71,5;81,5
+2019-20;B;6;Agghiaggiande;Big Black Cimamori;2;0;73,5;61
+2019-20;B;6;FK Partizena;ACDF;2;1;73;67
+2019-20;A;7;Vanndoria;Parter;0;0;62,5;60,5
+2019-20;A;7;Olympique Bidet;Der Holzfaller;0;2;63;73,5
+2019-20;B;7;Big Black Cimamori;FK Partizena;1;1;69;68
+2019-20;B;7;Los Angeles Showtime;Agghiaggiande;3;1;76,5;66
+2020-21;A;1;ACDF;Agghiaggiande;2;0;72;64
+2020-21;A;1;Parter;CSKA Moscow Mule;4;1;81;68,5
+2020-21;B;1;Der Holzfaller;Olympique Bidet;2;2;73;75,5
+2020-21;B;1;Vanndoria;Los Angeles Showtime;2;3;72;79,5
+2020-21;A;2;CSKA Moscow Mule;ACDF;2;1;75,5;70,5
+2020-21;A;2;Agghiaggiande;Big Black Cimamori;2;1;75;66
+2020-21;B;2;Los Angeles Showtime;Der Holzfaller;2;2;72,5;71
+2020-21;B;2;Olympique Bidet;FK Partizena;2;0;75;63,5
+2020-21;A;3;Big Black Cimamori;CSKA Moscow Mule;1;4;70,5;82
+2020-21;A;3;ACDF;Parter;3;0;77,5;58,5
+2020-21;B;3;FK Partizena;Los Angeles Showtime;0;0;64,5;59,5
+2020-21;B;3;Der Holzfaller;Vanndoria;3;0;80,5;65
+2020-21;A;4;CSKA Moscow Mule;Agghiaggiande;4;0;84,5;58
+2020-21;A;4;Parter;Big Black Cimamori;1;2;69;73
+2020-21;B;4;Los Angeles Showtime;Olympique Bidet;0;3;52;72,5
+2020-21;B;4;Vanndoria;FK Partizena;2;1;73,5;69
+2020-21;A;5;Big Black Cimamori;ACDF;2;1;71;70,5
+2020-21;A;5;Agghiaggiande;Parter;1;1;67,5;67,5
+2020-21;B;5;Olympique Bidet;Vanndoria;0;2;65;75
+2020-21;B;5;FK Partizena;Der Holzfaller;2;3;75;78,5
+2020-21;A;6;Agghiaggiande;ACDF;1;2;70,5;73,5
+2020-21;A;6;CSKA Moscow Mule;Parter;2;4;73,5;84,5
+2020-21;B;6;Olympique Bidet;Der Holzfaller;2;0;75,5;65
+2020-21;B;6;Los Angeles Showtime;Vanndoria;1;2;67,5;73,5
+2020-21;A;7;ACDF;CSKA Moscow Mule;0;1;64;69
+2020-21;A;7;Big Black Cimamori;Agghiaggiande;2;4;73,5;84,5
+2020-21;B;7;FK Partizena;Olympique Bidet;4;1;85,5;69
+2020-21;B;7;Der Holzfaller;Los Angeles Showtime;1;1;67,5;68,5
+2020-21;A;8;CSKA Moscow Mule;Big Black Cimamori;1;4;67;81,5
+2020-21;A;8;Parter;ACDF;4;0;81,5;65,5
+2020-21;B;8;Los Angeles Showtime;FK Partizena;3;2;77,5;71,5
+2020-21;B;8;Vanndoria;Der Holzfaller;1;1;70,5;70
+2020-21;A;9;Agghiaggiande;CSKA Moscow Mule;1;2;69,5;72,5
+2020-21;A;9;Big Black Cimamori;Parter;0;1;62;70
+2020-21;B;9;Olympique Bidet;Los Angeles Showtime;2;0;73;64
+2020-21;B;9;FK Partizena;Vanndoria;3;2;77,5;75
+2020-21;A;10;ACDF;Big Black Cimamori;0;2;63,5;74,5
+2020-21;A;10;Parter;Agghiaggiande;1;2;66,5;75
+2020-21;B;10;Der Holzfaller;FK Partizena;1;1;70,5;68
+2020-21;B;10;Vanndoria;Olympique Bidet;2;1;71,5;69
+2020-21;FIN;;CSKA Moscow Mule;Vanndoria;0;3;63,5;76
+2021-22;A;1;Agghiaggiande;Vanndoria;1;2;69,5;73
+2021-22;A;1;Olympique Bidet;Big Black Cimamori;1;4;66;82
+2021-22;B;1;Los Angeles Showtime;Der Holzfaller;1;4;67,5;84,5
+2021-22;B;1;FK Partizena;Parter;2;1;73,5;70,5
+2021-22;A;2;Big Black Cimamori;CSKA Moscow Mule;0;1;58,5;67
+2021-22;A;2;Vanndoria;Olympique Bidet;4;2;81;74,5
+2021-22;B;2;ACDF;FK Partizena;2;1;72,5;70
+2021-22;B;2;Parter;Los Angeles Showtime;0;2;64,5;71
+2021-22;A;3;Agghiaggiande;Big Black Cimamori;0;2;61;74,5
+2021-22;A;3;CSKA Moscow Mule;Olympique Bidet;2;3;75,5;80
+2021-22;B;3;Los Angeles Showtime;ACDF;1;1;68;69,5
+2021-22;B;3;Parter;Der Holzfaller;2;1;75;68
+2021-22;A;4;CSKA Moscow Mule;Vanndoria;1;2;67;73,5
+2021-22;A;4;Olympique Bidet;Agghiaggiande;0;0;63,5;61,5
+2021-22;B;4;ACDF;Parter;1;1;70,5;68,5
+2021-22;B;4;FK Partizena;Der Holzfaller;1;2;67,5;74
+2021-22;A;5;Agghiaggiande;CSKA Moscow Mule;1;2;69;72,5
+2021-22;A;5;Vanndoria;Big Black Cimamori;1;1;70,5;66,5
+2021-22;B;5;Los Angeles Showtime;FK Partizena;3;2;76;73
+2021-22;B;5;Der Holzfaller;ACDF;3;3;79;76,5
+2021-22;A;6;Vanndoria;Agghiaggiande;0;1;62;69
+2021-22;A;6;Big Black Cimamori;Olympique Bidet;0;2;65,5;73,5
+2021-22;B;6;Der Holzfaller;Los Angeles Showtime;2;1;75;70,5
+2021-22;B;6;Parter;FK Partizena;0;1;65,5;69,5
+2021-22;A;7;CSKA Moscow Mule;Big Black Cimamori;2;0;73;59,5
+2021-22;A;7;Olympique Bidet;Vanndoria;2;0;71,5;59
+2021-22;B;7;FK Partizena;ACDF;0;1;65;70
+2021-22;B;7;Los Angeles Showtime;Parter;2;2;71;72,5
+2021-22;A;8;Big Black Cimamori;Agghiaggiande;0;2;63;72,5
+2021-22;A;8;Olympique Bidet;CSKA Moscow Mule;0;0;56,5;65,5
+2021-22;B;8;ACDF;Los Angeles Showtime;2;1;72;69,5
+2021-22;B;8;Der Holzfaller;Parter;1;0;67;62,5
+2021-22;A;9;Vanndoria;CSKA Moscow Mule;1;1;68,5;67
+2021-22;A;9;Agghiaggiande;Olympique Bidet;2;2;71;71,5
+2021-22;B;9;Parter;ACDF;1;1;69,5;69,5
+2021-22;B;9;Der Holzfaller;FK Partizena;2;1;72,5;68
+2021-22;A;10;CSKA Moscow Mule;Agghiaggiande;1;2;66;73,5
+2021-22;A;10;Big Black Cimamori;Vanndoria;1;0;67;64
+2021-22;B;10;FK Partizena;Los Angeles Showtime;2;0;72,5;65,5
+2021-22;B;10;ACDF;Der Holzfaller;3;2;77,5;72,5
+2021-22;SEM;;ACDF;Olympique Bidet;3;0;77;65
+2021-22;SEM;;CSKA Moscow Mule;Der Holzfaller;3;0;76;64
+2021-22;SEM;;Olympique Bidet;ACDF;3;2;78;73,5
+2021-22;SEM;;Der Holzfaller;CSKA Moscow Mule;2;3;74;76,5
+2021-22;FIN;;ACDF;CSKA Moscow Mule;1;1;68;66
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
