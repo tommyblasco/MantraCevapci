@@ -9,25 +9,6 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta, date
 
-#importiamoci tutti i file
-ruolo=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Ruolo')
-campionato=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Campionato')
-giocatori=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Giocatori')
-deco_prizes=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Deco_prizes')
-premi_extra=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Premi_extra')
-mercato=pd.read_excel(r'D:\Progetti\Fantacalcio_download\DBFanta.xlsx',sheet_name='Mercato')
-quotazioni=pd.read_excel(r'D:\Progetti\Fantacalcio_download\Quotazioni_new.xlsx')
-voti=pd.read_excel(r'D:\Progetti\Fantacalcio_download\Voti_new.xlsx')
-moduli=pd.read_excel(r'D:\Progetti\Fantacalcio_download\Moduli.xlsx',sheet_name='Schema')
-#db_b11=pd.read_excel(r'D:\Progetti\Fantacalcio\Output\b11.xlsx')
-
-#trasformazioni
-voti['Data']=voti['Data'].apply(pd.to_datetime)
-mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
-ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
-ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
-ruoli_att=['W; A','W; T; A','T; A','A','PC']
-
 #voti con stipendi e fv
 def voti_arricchiti():
     vo_ru=pd.merge(voti,ruolo,on=['Nome','Stagione'],how='left')
