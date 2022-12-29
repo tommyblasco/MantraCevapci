@@ -24,6 +24,7 @@ mercato=load_data("Mercato")
 quotazioni=load_data("Quotazioni_new")
 voti=load_data("Voti_new")
 moduli=load_data("Moduli")
+albo_doro=load_data("Albo_doro")
 
 voti['Data']=voti['Data'].apply(pd.to_datetime)
 mercato['Data']=mercato['Data'].apply(pd.to_datetime)
@@ -243,6 +244,12 @@ def controclass(seas):
             exp_points.append((p_vinte * 3 + p_pari) / 9)
     df_riad['Exp_Pnt'] = exp_points
     return df_riad
+
+def cronistoria(team,comp):
+    db=albo_doro[(albo_doro['Squadra']==team) & (albo_doro['Competizione']==comp)]
+    if db.shape[0]>0:
+        db=db[['Stagione','Risultato']]
+    return db
 
 ###############  APPLICAZIONE ######################
 

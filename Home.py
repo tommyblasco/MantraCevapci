@@ -1,11 +1,16 @@
 import streamlit as st
 st.set_page_config(page_title="Mantra Cevapci")
-
+from PIL import Image
+import requests
+from io import BytesIO
 from funzioni import *
 
 stagione_in_corso='2022-23'
 
 st.title("Mantra Cevapci")
+url_stemma_lega="https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Campionato.png"
+st.image(Image.open(BytesIO(requests.get(url_stemma_lega).content)))
+
 st.subheader("Lega fantacalcio bosniaca affiliata alla federazione _ULMI_")
 
 st.header("Alcuni numeri:")
