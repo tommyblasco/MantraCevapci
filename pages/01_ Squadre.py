@@ -3,8 +3,6 @@ from datetime import date
 from PIL import Image
 from funzioni import *
 
-st.set_page_config(page_title="Mantra Cevapci")
-
 st.title("Squadre")
 
 list_team=tuple(set([x for x in mercato['A'] if str(x) != 'nan']))
