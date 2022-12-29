@@ -12,7 +12,7 @@ import streamlit as st
 
 @st.cache
 def load_data(df):
-    l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";")
+    l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";",decimal=",")
     return l_data
 
 ruolo=load_data("Ruolo")
