@@ -1,8 +1,7 @@
 import streamlit as st
-from funzioni import *
-
 st.set_page_config(page_title="Mantra Cevapci")
 
+from funzioni import *
 
 stagione_in_corso='2022-23'
 
