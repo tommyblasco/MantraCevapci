@@ -1,5 +1,7 @@
 DateTime==4.9
 pandas
 Pillow
+requests
+io
 numpy
 streamlit
