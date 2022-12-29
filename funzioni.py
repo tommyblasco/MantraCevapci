@@ -117,12 +117,9 @@ def billato(seas):
 # rose actual
 def rosa_oggi(team):
     market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['A']==team)]
-    gio_con = pd.merge(giocatori, market_now[['Nome', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',
-                       how='inner')
-    gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], left_on='ID', right_on='Nome',
-                         how='left')
-    gio_con_rq = pd.merge(gio_con_r, quotazioni[quotazioni['Stagione'] == max(quotazioni['Stagione'])], left_on='ID',
-                          right_on='Nome', how='left')
+    gio_con = pd.merge(giocatori, market_now[['Nome', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',how='inner')
+    gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], left_on='ID', right_on='Nome',how='left')
+    gio_con_rq = pd.merge(gio_con_r, quotazioni[quotazioni['Stagione'] == max(quotazioni['Stagione'])], left_on='ID',right_on='Nome', how='left')
     gio_con_rq = gio_con_rq.drop('Nome_y', axis=1).drop('Stagione_y', axis=1).drop('Stagione_x', axis=1)
     gio_con_rq.columns = ['ID', 'Nome', 'Data nascita', 'Luogo nascita', 'Nazionalità', 'url', 'Contratto', 'Fine prest',
                            'b', 'Ruolo', 'QI', 'QA', 'Diff', 'VI', 'VA', 'VFA']
@@ -165,6 +162,18 @@ def rosa_oggi(team):
 
     gio_con_rq['Indennizzo'] = gio_con_rq.apply(cond_indenn, axis=1)
     return gio_con_rq[['Nome','Data nascita','Luogo nascita','Nazionalità','Età','Ruolo','Contratto','Fine prest','Indennizzo','url']]
+
+def prestito_players(team):
+    market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['Da'] == team) & (mercato['deco_op']=='PRE')]
+    gio_con = pd.merge(giocatori[['ID']], market_now[['Nome', 'A', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',how='inner').drop('ID',axis=1)
+    gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], on='Nome',how='left')
+    return gio_con_r
+
+def primav_players(team):
+    market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['A'] == team) & (mercato['Primavera']=='P')]
+    gio_con = pd.merge(giocatori[['ID']], market_now[['Nome', 'TP']], left_on='ID', right_on='Nome',how='inner').drop('ID',axis=1)
+    gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], on='Nome',how='left')
+    return gio_con_r
 
 #b11
 def b11(seas,gio):
