@@ -18,9 +18,9 @@ rosa['Indennizzo']=["€{:,.2f}".format(x) for x in rosa['Indennizzo']]
 
 col1, col2 = st.columns(2)
 with col1:
-    st.image(Image.open("D:/Progetti/Fantacalcio_app/images/stemmi/"+sel_team+".png"))
+    st.image(Image.open("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/stemmi/"+sel_team+".png"))
 with col2:
-    st.image(Image.open("D:/Progetti/Fantacalcio_app/images/maglie/"+sel_team+".png"))
+    st.image(Image.open("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/maglie/"+sel_team+".png"))
 
 tab1, tab2, tab3 = st.tabs(["Rosa attuale","Storia","Insights"])
 with tab1:
