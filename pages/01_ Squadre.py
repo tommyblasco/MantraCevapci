@@ -1,6 +1,8 @@
 import streamlit as st
 from datetime import date
 from PIL import Image
+import requests
+from io import BytesIO
 from funzioni import *
 
 st.title("Squadre")
@@ -16,9 +18,11 @@ rosa['Indennizzo']=["€{:,.2f}".format(x) for x in rosa['Indennizzo']]
 
 col1, col2 = st.columns(2)
 with col1:
-    st.image(Image.open("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/stemmi/"+sel_team+".png".replace(' ','%20')))
+    url1="https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/stemmi/"+sel_team+".png".replace(' ','%20')
+    st.image(Image.open(BytesIO(requests.get(url1).content)))
 with col2:
-    st.image(Image.open("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/maglie/"+sel_team+".png".replace(' ','%20')))
+    url2="https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/maglie/"+sel_team+".png".replace(' ','%20')
+    st.image(Image.open(BytesIO(requests.get(url2).content)))
 
 tab1, tab2, tab3 = st.tabs(["Rosa attuale","Storia","Insights"])
 with tab1:
