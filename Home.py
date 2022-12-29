@@ -1,6 +1,8 @@
 import streamlit as st
 from funzioni import *
 
+st.set_page_config(page_title="Mantra Cevapci")
+
 @st.cache
 def load_data(df):
     l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";")
@@ -23,8 +25,6 @@ ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','
 ruoli_att=['W; A','W; T; A','T; A','A','PC']
 
 stagione_in_corso='2022-23'
-
-st.set_page_config(page_title="Mantra Cevapci")
 
 st.title("Mantra Cevapci")
 st.subheader("Lega fantacalcio bosniaca affiliata alla federazione _ULMI_")
