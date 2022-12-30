@@ -6,3 +6,4 @@ numpy
 streamlit
 plotly
 raceplotly
+ipywidgets
