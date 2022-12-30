@@ -11,6 +11,22 @@ from datetime import datetime, timedelta, date
 import streamlit as st
 
 @st.cache
+def load_images(team):
+    url_stemma="https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/stemmi/"+team+".png".replace(' ','%20')
+    url_maglie="https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/maglie/"+team+".png".replace(' ', '%20')
+    url_pres = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/persone/"+team+" - pres.jpg".replace(' ', '%20')
+    url_ds = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/persone/"+team+" - ds.jpg".replace(' ', '%20')
+    url_mister = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/persone/"+team+" - mister.jpg".replace(' ', '%20')
+    return [url_stemma, url_maglie, url_pres, url_ds, url_mister]
+@st.cache
+def load_images_cup():
+    url_camp = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Campionato.png"
+    url_luk = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Coppa%20Luk.png"
+    url_iva = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Supercoppa%20Ivanica.png"
+    url_ulmi = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Ulmi.png"
+    return [url_camp, url_luk, url_iva, url_ulmi]
+
+@st.cache
 def load_data(df):
     l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";",decimal=",")
     return l_data
@@ -78,18 +94,38 @@ def ranking(seas):
     classifica.insert(0,'Pos',list(range(1,11)))
     return classifica
 
+def class_for_rbc(seas):
+    db=campionato[campionato['Stagione']==seas]
+    db['H']=[1 if x>y else 0 for x,y in zip(db['GH'],db['GA'])]
+    db['N']=[1 if x==y else 0 for x,y in zip(db['GH'],db['GA'])]
+    db['A']=[1 if x<y else 0 for x,y in zip(db['GH'],db['GA'])]
+    db['PH']=[x*3+y for x,y in zip(db['H'],db['N'])]
+    db['PA']=[x*3+y for x,y in zip(db['A'],db['N'])]
+    casa=db[['Home','Giornata','PH']]
+    casa.columns=['Squadra','Giornata','Pnt']
+    tras = db[['Away', 'Giornata', 'PA']]
+    tras.columns = ['Squadra', 'Giornata', 'Pnt']
+    db_tot=casa.append(tras)
+    if seas=='2020-21':
+        db_tot.loc[(db_tot['Squadra']=='Agghiaggiande')&(db_tot['Giornata']==1),'Pnt']=db_tot.loc[(db_tot['Squadra']=='Agghiaggiande')&(db_tot['Giornata']==1),'Pnt']-5
+    if seas=='2022-23':
+        db_tot.loc[(db_tot['Squadra']=='Olympique Bidet')&(db_tot['Giornata']==1),'Pnt']=db_tot.loc[(db_tot['Squadra']=='Olympique Bidet')&(db_tot['Giornata']==1),'Pnt']-1
+    db_tot = db_tot.sort_values(by=['Giornata'])
+    db_tot['CumP'] = db_tot.groupby(['Squadra'], as_index=False)['Pnt'].transform(pd.Series.cumsum)
+    return db_tot
+
 #bilancio
 def billato(seas):
-    mercato=mercato[mercato['Stagione']==seas]
-    ms=sum(voti_arricchiti(voti,ruolo,mercato).loc[(voti_arricchiti(voti,ruolo,mercato)['Squadra']!='') & (voti_arricchiti(voti,ruolo,mercato)['Stagione']==seas),'Stipendio'])
-    cl_pre=pd.merge(ranking(seas,campionato),premi_extra[premi_extra['Stagione']==seas],on=['Squadra'],how='left')
+    mk=mercato[mercato['Stagione']==seas]
+    ms=sum(voti_arricchiti().loc[(voti_arricchiti()['Squadra']!='') & (voti_arricchiti()['Stagione']==seas),'Stipendio'])
+    cl_pre=pd.merge(ranking(seas),premi_extra[premi_extra['Stagione']==seas],on=['Squadra'],how='left')
     cl_pre_d=pd.merge(cl_pre,deco_prizes[deco_prizes['Stagione']==seas],on=['Pos'],how='left')
     cl_pre_d['Stipendio']=[ms]*cl_pre_d.shape[0]
     cl_pre_d['Prize_Cup']=cl_pre_d['Prize_Cup'].fillna(0)
     cl_pre_d['Tot']=[a+b+c*d for a,b,c,d in zip(cl_pre_d['Prize_Cup'],cl_pre_d['Fisso'],cl_pre_d['Percentuale'],cl_pre_d['Stipendio'])]
     premi=cl_pre_d[['Squadra','Tot']]
     premi.insert(1,'Voce',['Premi']*premi.shape[0])
-    ricavi=mercato.groupby(['Da','deco_op'],as_index=False).agg({'Entrata_Da':'sum'})
+    ricavi=mk.groupby(['Da','deco_op'],as_index=False).agg({'Entrata_Da':'sum'})
     ricavi.rename(columns={'Da':'Squadra','deco_op':'Voce','Entrata_Da':'Tot'},inplace=True)
 
     entrate_fin=pd.concat([premi,ricavi])
@@ -99,14 +135,15 @@ def billato(seas):
     stip=v.groupby(['Squadra'],as_index=False).agg({'Stipendio':'sum'})
     stip.insert(1,'Voce',['Stipendi']*stip.shape[0])
     stip.rename(columns={'Stipendio':'Tot'},inplace=True)
-    contracts=mercato.groupby(['A'],as_index=False).agg({'Costo_contratto':'sum'})
+    contracts=mk.groupby(['A'],as_index=False).agg({'Costo_contratto':'sum'})
     contracts.rename(columns={'Costo_contratto':'Tot','A':'Squadra'},inplace=True)
     contracts.insert(1,'Voce',['Contratti']*contracts.shape[0])
-    quots=mercato['A'].drop_duplicates()
-    quots.rename(columns={'A':'Squadra'},inplace=True)
-    quots['Voce']=['Quota']*quots.shape[0]
-    quots['Tot']=[40]*quots.shape[0]
-    costi=mercato.groupby(['A','deco_op'],as_index=False).agg({'Spesa_A':'sum'}).rename({'A':'Squadra','deco_op':'Voce','Spesa_A':'Tot'},inplace=True)
+    tm_quot=mk['A'].drop_duplicates()
+    vc_quot=['Quota']*len(tm_quot)
+    tot_quot=[40]*len(tm_quot)
+    quots=pd.DataFrame({'Squadra':tm_quot,'Voce':vc_quot,'Tot':tot_quot})
+    costi=mk.groupby(['A','deco_op'],as_index=False).agg({'Spesa_A':'sum'})
+    costi.rename(columns={'A':'Squadra','deco_op':'Voce','Spesa_A':'Tot'},inplace=True)
 
     spese_fin=pd.concat([stip,contracts,quots,costi])
     spese_fin['Tot']=[x*(-1) for x in spese_fin['Tot']]
@@ -243,13 +280,29 @@ def controclass(seas):
             p_pari = sum([1 if gf_team == x else 0 for x in list_gol_xtra_team])
             exp_points.append((p_vinte * 3 + p_pari) / 9)
     df_riad['Exp_Pnt'] = exp_points
-    return df_riad
+    df_cc=df_riad.groupby(['Team'],as_index=False).agg({'Exp_Pnt':'sum'}).sort_values(by=['Exp_Pnt'],ascending=False)
+    df_cc['Exp_Pnt']=[int(x) for x in df_cc['Exp_Pnt']]
+    return df_cc
 
 def cronistoria(team,comp):
     db=albo_doro[(albo_doro['Squadra']==team) & (albo_doro['Competizione']==comp)]
     if db.shape[0]>0:
         db=db[['Stagione','Risultato']]
     return db
+
+def precedenti(team):
+    campionato['WH']=[1 if x>y else 0 for x,y in zip(campionato['GH'],campionato['GA'])]
+    campionato['D'] = [1 if x == y else 0 for x,y in zip(campionato['GH'], campionato['GA'])]
+    campionato['WA'] = [1 if x < y else 0 for x,y in zip(campionato['GH'], campionato['GA'])]
+    db_casa=campionato[campionato['Home']==team]
+    db_tras=campionato[campionato['Away']==team]
+    db_casa=db_casa[['Away','WH','D','WA','GH','GA','PntH']]
+    db_casa.columns=['Avversario','V','N','P','GF','GS','Gio']
+    db_tras = db_tras[['Home', 'WA','D','WH', 'GA', 'GH','PntA']]
+    db_tras.columns = ['Avversario','V','N','P','GF','GS','Gio']
+    db=db_casa.append(db_tras).groupby(['Avversario']).agg({'Gio':'count','V':'sum','N':'sum','P':'sum','GF':'sum','GS':'sum'})
+    db['Bilancio']=[x-y for x,y in zip(db['V'],db['P'])]
+    return db.sort_values(by=['Bilancio'],ascending=False)
 
 ###############  APPLICAZIONE ######################
 
