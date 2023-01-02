@@ -318,7 +318,7 @@ def precedenti(team):
 
 def player_cards(squad):
     list_img = []
-    font_url = "https://github.com/googlefonts/roboto/blob/master/src/hinted/Roboto-Regular.ttf?raw=true"
+    font_url = "https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Regular.ttf?raw=true"
     ff=io.BytesIO(requests.get(font_url, allow_redirects=True).content)
     for i in list(range(squad.shape[0])):
         cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
