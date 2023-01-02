@@ -10,7 +10,6 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta, date
 import streamlit.components.v1 as components
-import streamlit_card
 from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
