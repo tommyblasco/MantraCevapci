@@ -7,8 +7,17 @@ Created on Wed Oct 14 11:31:20 2020
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta, date
 import streamlit as st
+from datetime import datetime, timedelta, date
+import streamlit.components.v1 as components
+import streamlit_card
+from PIL import Image, ImageDraw, ImageFont
+import requests
+from io import BytesIO
+import plotly.graph_objects as go
+from raceplotly.plots import barplot
+
+stagione_in_corso='2022-23'
 
 @st.cache
 def load_images(team):
@@ -24,7 +33,9 @@ def load_images_cup():
     url_luk = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Coppa%20Luk.png"
     url_iva = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Supercoppa%20Ivanica.png"
     url_ulmi = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Ulmi.png"
-    return [url_camp, url_luk, url_iva, url_ulmi]
+    url_campo = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/campo.png"
+    url_cards = "https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/images/cups/Card.png"
+    return [url_camp, url_luk, url_iva, url_ulmi,url_campo,url_cards]
 
 @st.cache
 def load_data(df):
@@ -40,6 +51,7 @@ mercato=load_data("Mercato")
 quotazioni=load_data("Quotazioni_new")
 voti=load_data("Voti_new")
 moduli=load_data("Moduli")
+grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
 
 voti['Data']=voti['Data'].apply(pd.to_datetime)
@@ -215,9 +227,8 @@ def primav_players(team):
 
 #b11
 def b11(seas,gio):
-    v_rist = voti_arricchiti(voti,ruolo,mercato)[['Nome','Ruolo','FV','Giornata','Squadra']]
-    v = v_rist[(v_rist['Giornata'] == gio) & (pd.notnull(v_rist['Squadra']))]
-
+    v_rist = voti_arricchiti()[(voti_arricchiti()['Stagione'] == seas) & (voti_arricchiti()['Giornata'] == gio) & (pd.notnull(voti_arricchiti()['Squadra']))]
+    v = v_rist[['Nome', 'Ruolo', 'FV', 'Giornata', 'Squadra']]
     m = moduli[moduli['Stagione'] == seas]
     lg_sort = v.sort_values('FV', ascending=False)
     lg_sort = lg_sort[pd.notnull(lg_sort['FV'])]
@@ -304,12 +315,39 @@ def precedenti(team):
     db['Bilancio']=[x-y for x,y in zip(db['V'],db['P'])]
     return db.sort_values(by=['Bilancio'],ascending=False)
 
-###############  APPLICAZIONE ######################
+def player_cards(squad):
+    list_img = []
+    for i in list(range(squad.shape[0])):
+        cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
+        play = Image.open(BytesIO(requests.get(squad.iloc[i,9]).content))
+        pl_resz = play.resize((200, 300))
+        cart.paste(pl_resz, (440, 140))
+        img_drw = ImageDraw.Draw(cart)
+        bigFont = ImageFont.truetype('verdanab.ttf', 40)
+        mediumFont = ImageFont.truetype('verdanab.ttf', 30)
+        smallFont = ImageFont.truetype('verdanab.ttf', 20)
+        xsmallFont = ImageFont.truetype('verdanab.ttf', 15)
 
+        img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
+        if len(squad.iloc[i,5].split(";"))==1:
+            img_drw.text((245, 300), str(squad.iloc[i,5]), font=mediumFont, fill=(0, 0, 0))
+        elif len(squad.iloc[i,5].split(";"))==2:
+            img_drw.text((235, 300), str(squad.iloc[i, 5]), font=mediumFont, fill=(0, 0, 0))
+        else:
+            img_drw.text((225, 300), str(squad.iloc[i, 5]), font=mediumFont, fill=(0, 0, 0))
+        img_drw.text((260, 520), str(squad.iloc[i, 0]), font=mediumFont, fill=(0, 0, 0))
+        img_drw.text((260, 580), str(squad.iloc[i, 1]), font=smallFont, fill=(0, 0, 0))
+        img_drw.text((260, 620), str(squad.iloc[i, 2]), font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((260, 660), str(squad.iloc[i, 3]), font=smallFont, fill=(0, 0, 0))
+        img_drw.text((260, 700), str(squad.iloc[i, 7]), font=smallFont, fill=(0, 0, 0))
+        img_drw.text((300, 740), str(squad.iloc[i, 8]), font=smallFont, fill=(0, 0, 0))
 
-#b11(seas=,gio=)
-#rosa_oggi(team=)
-#voti_arricchiti()
-#ranking(seas=)
-#billato(seas=)
-#controclass(seas=)
+        img_drw.text((350, 220), "Età", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((350, 320), "Ruolo", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((500, 580), "Data nascita", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((500, 620), "Luogo nascita", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((500, 660), "Nazionalità", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((500, 700), "Scadenza", font=xsmallFont, fill=(0, 0, 0))
+        img_drw.text((500, 740), "Indennizzo", font=xsmallFont, fill=(0, 0, 0))
+        list_img.append(cart.convert('RGBA'))
+    return list_img
