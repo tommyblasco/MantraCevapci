@@ -10,6 +10,7 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta, date
 import streamlit.components.v1 as components
+from urllib.request import urlopen
 from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
@@ -322,10 +323,10 @@ def player_cards(squad):
         pl_resz = play.resize((200, 300))
         cart.paste(pl_resz, (440, 140))
         img_drw = ImageDraw.Draw(cart)
-        bigFont = ImageFont.truetype('verdanab.ttf', 40)
-        mediumFont = ImageFont.truetype('verdanab.ttf', 30)
-        smallFont = ImageFont.truetype('verdanab.ttf', 20)
-        xsmallFont = ImageFont.truetype('verdanab.ttf', 15)
+        bigFont = ImageFont.truetype(urlopen('https://github.com/googlefonts/roboto/blob/master/src/hinted/Roboto-Regular.ttf?raw=true'), 40)
+        mediumFont = ImageFont.truetype(urlopen('https://github.com/googlefonts/roboto/blob/master/src/hinted/Roboto-Regular.ttf?raw=true'), 30)
+        smallFont = ImageFont.truetype(urlopen('https://github.com/googlefonts/roboto/blob/master/src/hinted/Roboto-Regular.ttf?raw=true'), 20)
+        xsmallFont = ImageFont.truetype(urlopen('https://github.com/googlefonts/roboto/blob/master/src/hinted/Roboto-Regular.ttf?raw=true'), 15)
 
         img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
         if len(squad.iloc[i,5].split(";"))==1:
