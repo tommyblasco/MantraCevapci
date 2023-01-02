@@ -34,8 +34,9 @@ with tab0:
             st.image(carc)
     coldif, colatt = st.columns(2)
     with coldif:
+        rdi=ruoli_dif[1:]
         st.subheader('Difensori')
-        dife=rosa[rosa['Ruolo'].isin(ruoli_dif)]
+        dife=rosa[rosa['Ruolo'].isin(rdi)]
         ld=player_cards(dife)
         for cardi in ld:
             st.image(cardi)
