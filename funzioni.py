@@ -10,11 +10,10 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta, date
 import streamlit.components.v1 as components
-import urllib.request
+from urllib.request import urlopen
 from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
-import io
 import plotly.graph_objects as go
 from raceplotly.plots import barplot
 
@@ -318,18 +317,18 @@ def precedenti(team):
 
 def player_cards(squad):
     list_img = []
-    font_url = "https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Regular.ttf?raw=true"
-    ff=io.BytesIO(requests.get(font_url, allow_redirects=True).content)
+    font_url = "https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Bold.ttf?raw=true"
     for i in list(range(squad.shape[0])):
         cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
-        play = Image.open(BytesIO(requests.get(squad.iloc[i,9]).content))
-        pl_resz = play.resize((200, 300))
-        cart.paste(pl_resz, (440, 140))
+        if pd.notnull(squad.iloc[i,9]):
+            play = Image.open(BytesIO(requests.get(squad.iloc[i,9]).content))
+            pl_resz = play.resize((200, 300))
+            cart.paste(pl_resz, (440, 140))
         img_drw = ImageDraw.Draw(cart)
-        bigFont = ImageFont.truetype(ff,40)
-        mediumFont = ImageFont.truetype(ff,30)
-        smallFont = ImageFont.truetype(ff,20)
-        xsmallFont = ImageFont.truetype(ff,15)
+        bigFont = ImageFont.truetype(urlopen(font_url),40)
+        mediumFont = ImageFont.truetype(urlopen(font_url),30)
+        smallFont = ImageFont.truetype(urlopen(font_url),20)
+        xsmallFont = ImageFont.truetype(urlopen(font_url),15)
 
         img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
         if len(squad.iloc[i,5].split(";"))==1:
