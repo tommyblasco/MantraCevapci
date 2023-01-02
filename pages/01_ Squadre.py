@@ -1,19 +1,12 @@
-import streamlit as st
-from datetime import date
-from PIL import Image
-import requests
-from io import BytesIO
-import plotly.graph_objects as go
 from funzioni import *
 
 st.title("Squadre")
-stagione_in_corso='2022-23'
 
 list_team=tuple(set([x for x in mercato['A'] if str(x) != 'nan']))
 
 sel_team=st.selectbox('Scegli una squadra',list_team)
 
-rosa=rosa_oggi(team=sel_team).drop('url',axis=1)
+rosa=rosa_oggi(team=sel_team)
 rosa['Data nascita']=[x.date() for x in rosa['Data nascita']]
 rosa['Fine prest']=[x.date() for x in rosa['Fine prest']]
 rosa['Indennizzo']=["€{:,.2f}".format(x) for x in rosa['Indennizzo']]
@@ -24,7 +17,34 @@ with col1:
 with col2:
     st.image(Image.open(BytesIO(requests.get(load_images(team=sel_team)[1]).content)))
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Rosa attuale","Storico","Insights","Stipendi","Bilancio"])
+tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["La Rosa","Dettaglio rosa","Storico","Insights","Stipendi","Bilancio"])
+with tab0:
+    colpor, colcen = st.columns(2)
+    with colpor:
+        st.subheader('Portieri')
+        portie=rosa[rosa['Ruolo']=='Por']
+        lp=player_cards(portie)
+        for carp in lp:
+            st.image(carp)
+    with colcen:
+        st.subheader('Centrocampisti')
+        centr=rosa[rosa['Ruolo'].isin(ruoli_cen)]
+        lc=player_cards(centr)
+        for carc in lc:
+            st.image(carc)
+    coldif, colatt = st.columns(2)
+    with coldif:
+        st.subheader('Difensori')
+        dife=rosa[rosa['Ruolo'].isin(ruoli_dif)]
+        ld=player_cards(dife)
+        for cardi in ld:
+            st.image(cardi)
+    with colatt:
+        st.subheader('Attaccanti')
+        attc=rosa[rosa['Ruolo'].isin(ruoli_att)]
+        la=player_cards(attc)
+        for carat in la:
+            st.image(carat)
 with tab1:
     with st.expander("Organigramma"):
         col3, col4, col5 = st.columns(3)
@@ -36,7 +56,8 @@ with tab1:
             st.image(Image.open(BytesIO(requests.get(load_images(team=sel_team)[4]).content)),caption='Mister')
     st.header("Rosa attuale")
     sel_ruolo=st.multiselect("Filtra per ruolo",set([x for x in rosa['Ruolo'] if str(x) != 'nan']),set([x for x in rosa['Ruolo'] if str(x) != 'nan']))
-    st.dataframe(rosa[rosa['Ruolo'].isin(sel_ruolo)])
+    rosa_short=rosa[['Nome','Ruolo','Età','Contratto','Fine prest','Indennizzo']]
+    st.dataframe(rosa_short[rosa_short['Ruolo'].isin(sel_ruolo)])
 
     with st.expander("Giocatori in prestito"):
         if prestito_players(team=sel_team).shape[0]>0:
@@ -103,26 +124,37 @@ with tab4:
     col12, col13 = st.columns(2)
     with col12:
         st.write('Monte stip x giornata')
-        db_stip=voti_arricchiti()[(voti_arricchiti()['Squadra']==sel_team) & (voti_arricchiti()['Stagione']==stagione_in_corso)]
-        stip_seas=db_stip.groupby(['Giornata']).agg({'Stipendio':'sum'})
-        st.line_chart(stip_seas, use_container_width=True)
+        try:
+            db_stip=voti_arricchiti()[(voti_arricchiti()['Squadra']==sel_team) & (voti_arricchiti()['Stagione']==stagione_in_corso)]
+            stip_seas=db_stip.groupby(['Giornata']).agg({'Stipendio':'sum'})
+            st.line_chart(stip_seas, use_container_width=True)
+        except:
+            st.info("Stagione non ancora iniziata")
         st.write('Stipendi in campo/panca')
-        stip_seas_ok=sum(db_stip.loc[db_stip['Titolarita']==1,'Stipendio'])
-        stip_seas_ko = sum(db_stip.loc[db_stip['Titolarita']==0,'Stipendio'])
-        tit_no=go.Pie(hole=0.5,sort=False,direction='clockwise',values=[stip_seas_ok,stip_seas_ko],
-               labels=["Stip in campo","Stip in panca"],showlegend=False)
-        st.plotly_chart(go.FigureWidget(data=tit_no), use_container_width=True)
+        try:
+            stip_seas_ok=sum(db_stip.loc[db_stip['Titolarita']==1,'Stipendio'])
+            stip_seas_ko = sum(db_stip.loc[db_stip['Titolarita']==0,'Stipendio'])
+            tit_no=go.Pie(hole=0.5,sort=False,direction='clockwise',values=[stip_seas_ok,stip_seas_ko],
+                   labels=["Stip in campo","Stip in panca"],showlegend=False)
+            st.plotly_chart(go.FigureWidget(data=tit_no), use_container_width=True)
+        except:
+            st.info("Stagione non ancora iniziata")
     with col13:
-        stip_player=db_stip.groupby(['Nome'],as_index=False).agg({'Stipendio':'sum'}).sort_values(by=['Stipendio'],ascending=False)
-        stip_player['Stipendio'] = ["€{:,.2f}".format(x) for x in stip_player['Stipendio']]
         st.write('Top 5 stipendi')
-        st.dataframe(stip_player.iloc[:5,:])
-
-        non_messi=db_stip[db_stip['Titolarita']==0].sort_values(by=['FV'],ascending=False)
-        non_messi=non_messi[['Nome','Giornata','FV']]
-        non_messi['FV']=[round(x,2) for x in non_messi['FV']]
+        try:
+            stip_player=db_stip.groupby(['Nome'],as_index=False).agg({'Stipendio':'sum'}).sort_values(by=['Stipendio'],ascending=False)
+            stip_player['Stipendio'] = ["€{:,.2f}".format(x) for x in stip_player['Stipendio']]
+            st.dataframe(stip_player.iloc[:5,:])
+        except:
+            st.info("Stagione non ancora iniziata")
         st.write('Top 5 lasciati in panchina')
-        st.dataframe(non_messi.iloc[:5,:])
+        try:
+            non_messi=db_stip[db_stip['Titolarita']==0].sort_values(by=['FV'],ascending=False)
+            non_messi=non_messi[['Nome','Giornata','FV']]
+            non_messi['FV']=[round(x,2) for x in non_messi['FV']]
+            st.dataframe(non_messi.iloc[:5,:])
+        except:
+            st.info("Stagione non ancora iniziata")
 with tab5:
     bil = billato(seas=stagione_in_corso)
     bil = bil[bil['Squadra'] == sel_team]
