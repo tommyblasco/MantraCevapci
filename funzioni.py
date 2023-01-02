@@ -317,7 +317,7 @@ def precedenti(team):
 
 def player_cards(squad):
     list_img = []
-    font_url = "https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Bold.ttf?raw=true"
+    font_url = ImageFont.load_default()
     for i in list(range(squad.shape[0])):
         cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
         if pd.notnull(squad.iloc[i,9]):
@@ -325,10 +325,10 @@ def player_cards(squad):
             pl_resz = play.resize((200, 300))
             cart.paste(pl_resz, (440, 140))
         img_drw = ImageDraw.Draw(cart)
-        bigFont = ImageFont.truetype(urlopen(font_url),40)
-        mediumFont = ImageFont.truetype(urlopen(font_url),30)
-        smallFont = ImageFont.truetype(urlopen(font_url),20)
-        xsmallFont = ImageFont.truetype(urlopen(font_url),15)
+        bigFont = ImageFont.truetype(font_url,40)
+        mediumFont = ImageFont.truetype(font_url,30)
+        smallFont = ImageFont.truetype(font_url,20)
+        xsmallFont = ImageFont.truetype(font_url,15)
 
         img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
         if len(squad.iloc[i,5].split(";"))==1:
