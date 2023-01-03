@@ -39,7 +39,18 @@ def load_images_cup():
 
 @st.cache
 def load_data(df):
-    l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",sep=";",decimal=",")
+    if df=='Mercato':
+        l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",
+                           sep=";",decimal=",",parse_dates=['Data','TP'],dayfirst=True)
+    elif df=='Voti_new':
+        l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",
+                           sep=";",decimal=",",parse_dates=['Data'],dayfirst=True)
+    elif df=='Giocatori':
+        l_data=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/"+df+".csv",
+                           sep=";",decimal=",",parse_dates=['Data_nascita'],dayfirst=True)
+    else:
+        l_data = pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/" + df + ".csv",
+                             sep=";", decimal=",")
     return l_data
 
 ruolo=load_data("Ruolo")
@@ -54,10 +65,7 @@ moduli=load_data("Moduli")
 grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
 
-voti['Data']=voti['Data'].apply(pd.to_datetime, format="%d/%m/%Y")
-mercato['Data']=mercato['Data'].apply(pd.to_datetime, format="%d/%m/%Y")
-mercato['TP']=mercato['TP'].apply(pd.to_datetime, format="%d/%m/%Y")
-giocatori['Data_nascita']=giocatori['Data_nascita'].apply(pd.to_datetime, format="%d/%m/%Y")
+
 mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
 ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
 ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
