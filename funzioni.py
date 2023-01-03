@@ -317,7 +317,8 @@ def precedenti(team):
 
 def player_cards(squad):
     list_img = []
-    font_url = ImageFont.load_default()
+    name_font = 'http://themes.googleusercontent.com/static/fonts/racingsansone/v1/1r3DpWaCiT7y3PD4KgkNyO921tOcMok2fHawGmtxikA.ttf'
+    font_all = 'http://themes.googleusercontent.com/static/fonts/robotoslab/v2/y7lebkjgREBJK96VQi37Zp0EAVxt0G0biEntp43Qt6E.ttf'
     for i in list(range(squad.shape[0])):
         cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
         if pd.notnull(squad.iloc[i,9]):
@@ -325,11 +326,11 @@ def player_cards(squad):
             pl_resz = play.resize((200, 300))
             cart.paste(pl_resz, (440, 140))
         img_drw = ImageDraw.Draw(cart)
-        bigFont = ImageFont.truetype(font_url,40)
-        mediumFont = ImageFont.truetype(font_url,30)
-        smallFont = ImageFont.truetype(font_url,20)
-        xsmallFont = ImageFont.truetype(font_url,15)
-
+        bigFont = ImageFont.truetype(urlopen(font_all),40)
+        mediumFont = ImageFont.truetype(urlopen(font_all),30)
+        smallFont = ImageFont.truetype(urlopen(font_all),20)
+        xsmallFont = ImageFont.truetype(urlopen(font_all),15)
+        nf = ImageFont.truetype(urlopen(name_font),30)
         img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
         if len(squad.iloc[i,5].split(";"))==1:
             img_drw.text((245, 300), str(squad.iloc[i,5]), font=mediumFont, fill=(0, 0, 0))
@@ -337,7 +338,7 @@ def player_cards(squad):
             img_drw.text((235, 300), str(squad.iloc[i, 5]), font=mediumFont, fill=(0, 0, 0))
         else:
             img_drw.text((225, 300), str(squad.iloc[i, 5]), font=mediumFont, fill=(0, 0, 0))
-        img_drw.text((260, 520), str(squad.iloc[i, 0]), font=mediumFont, fill=(0, 0, 0))
+        img_drw.text((260, 520), str(squad.iloc[i, 0]), font=nf, fill=(0, 0, 0))
         img_drw.text((260, 580), str(squad.iloc[i, 1]), font=smallFont, fill=(0, 0, 0))
         img_drw.text((260, 620), str(squad.iloc[i, 2]), font=xsmallFont, fill=(0, 0, 0))
         img_drw.text((260, 660), str(squad.iloc[i, 3]), font=smallFont, fill=(0, 0, 0))
