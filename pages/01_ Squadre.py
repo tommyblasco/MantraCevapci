@@ -20,20 +20,13 @@ with col2:
 tab0, \
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["La Rosa","Dettaglio rosa","Storico","Insights","Stipendi","Bilancio"])
 with tab0:
-    colpor, colcen = st.columns(2)
+    colpor, coldif = st.columns(2)
     with colpor:
         st.subheader('Portieri')
         portie=rosa[rosa['Ruolo']=='Por']
         lp=player_cards(portie)
         for carp in lp:
             st.image(carp)
-    with colcen:
-        st.subheader('Centrocampisti')
-        centr=rosa[rosa['Ruolo'].isin(ruoli_cen)]
-        lc=player_cards(centr)
-        for carc in lc:
-            st.image(carc)
-    coldif, colatt = st.columns(2)
     with coldif:
         rdi=ruoli_dif[1:]
         st.subheader('Difensori')
@@ -41,6 +34,13 @@ with tab0:
         ld=player_cards(dife)
         for cardi in ld:
             st.image(cardi)
+    colcen, colatt = st.columns(2)
+    with colcen:
+        st.subheader('Centrocampisti')
+        centr=rosa[rosa['Ruolo'].isin(ruoli_cen)]
+        lc=player_cards(centr)
+        for carc in lc:
+            st.image(carc)
     with colatt:
         st.subheader('Attaccanti')
         attc=rosa[rosa['Ruolo'].isin(ruoli_att)]
