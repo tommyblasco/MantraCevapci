@@ -54,10 +54,10 @@ moduli=load_data("Moduli")
 grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
 
-voti['Data']=voti['Data'].apply(pd.to_datetime)
-mercato['Data']=mercato['Data'].apply(pd.to_datetime)
-mercato['TP']=mercato['TP'].apply(pd.to_datetime)
-giocatori['Data_nascita']=giocatori['Data_nascita'].apply(pd.to_datetime)
+voti['Data']=voti['Data'].apply(pd.to_datetime, format="%d/%m/%Y")
+mercato['Data']=mercato['Data'].apply(pd.to_datetime, format="%d/%m/%Y")
+mercato['TP']=mercato['TP'].apply(pd.to_datetime, format="%d/%m/%Y")
+giocatori['Data_nascita']=giocatori['Data_nascita'].apply(pd.to_datetime, format="%d/%m/%Y")
 mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
 ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
 ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
