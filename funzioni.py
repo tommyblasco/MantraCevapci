@@ -317,8 +317,8 @@ def precedenti(team):
 
 def player_cards(squad):
     list_img = []
-    name_font = 'http://themes.googleusercontent.com/static/fonts/racingsansone/v1/1r3DpWaCiT7y3PD4KgkNyO921tOcMok2fHawGmtxikA.ttf'
-    font_all = 'http://themes.googleusercontent.com/static/fonts/robotoslab/v2/y7lebkjgREBJK96VQi37Zp0EAVxt0G0biEntp43Qt6E.ttf'
+    name_font = requests.get('http://themes.googleusercontent.com/static/fonts/racingsansone/v1/1r3DpWaCiT7y3PD4KgkNyO921tOcMok2fHawGmtxikA.ttf')
+    font_all = requests.get('http://themes.googleusercontent.com/static/fonts/robotoslab/v2/y7lebkjgREBJK96VQi37Zp0EAVxt0G0biEntp43Qt6E.ttf')
     for i in list(range(squad.shape[0])):
         cart = Image.open(BytesIO(requests.get(load_images_cup()[5]).content))
         if pd.notnull(squad.iloc[i,9]):
@@ -326,11 +326,11 @@ def player_cards(squad):
             pl_resz = play.resize((200, 300))
             cart.paste(pl_resz, (440, 140))
         img_drw = ImageDraw.Draw(cart)
-        bigFont = ImageFont.truetype(BytesIO(open(font_all, 'rb').read()),40)
-        mediumFont = ImageFont.truetype(BytesIO(open(font_all, 'rb').read()),30)
-        smallFont = ImageFont.truetype(BytesIO(open(font_all, 'rb').read()),20)
-        xsmallFont = ImageFont.truetype(BytesIO(open(font_all, 'rb').read()),15)
-        nf = ImageFont.truetype(BytesIO(open(font_all, 'rb').read()),30)
+        bigFont = ImageFont.truetype(BytesIO(font_all.content),40)
+        mediumFont = ImageFont.truetype(BytesIO(font_all.content),30)
+        smallFont = ImageFont.truetype(BytesIO(font_all.content),20)
+        xsmallFont = ImageFont.truetype(BytesIO(font_all.content),15)
+        nf = ImageFont.truetype(BytesIO(name_font.content),30)
         img_drw.text((245, 200), str(squad.iloc[i,4]), font=bigFont, fill=(0, 0, 0))
         if len(squad.iloc[i,5].split(";"))==1:
             img_drw.text((245, 300), str(squad.iloc[i,5]), font=mediumFont, fill=(0, 0, 0))
