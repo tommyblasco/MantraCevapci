@@ -3,7 +3,7 @@ from funzioni import *
 st.title("Giocatori")
 sel_player=st.selectbox('Scegli un giocatore:',tuple(set(giocatori['ID'])))
 
-tab10, tab11, tab12 = st.tabs(["Forma","Carriera","Stats all time per team"])
+tab10, tab11 = st.tabs(["Forma","Carriera"])
 with tab10:
     col18, col19 = st.columns(2)
     with col18:
@@ -31,5 +31,3 @@ with tab11:
     vgroup['RigF'] = [int(x) for x in vgroup['RigF']]
     vgroup['Ass'] = [int(x) for x in vgroup['Ass']]
     st.dataframe(vgroup)
-with tab12:
-    st.write('...')

@@ -30,6 +30,7 @@ with tab8:
         a_chart = go.Figure()
         a_chart.add_trace(go.Scatter(x=b_cla_s['Squadra'], y=b_cla_s['Soglia'], fill='tozeroy', name="Soglia"))
         a_chart.add_trace(go.Scatter(x=b_cla_s['Squadra'], y=b_cla_s['Tot'], fill='tonexty', name='Bilancio'))
+        a_chart.update_layout(legend=dict(orientation="h",y=1.1))
         st.plotly_chart(a_chart, use_container_width=True)
     with st.expander("Andamento monte stipendi per giornata"):
         v_stip = voti_arricchiti()[voti_arricchiti()['Stagione']==sel_sea]
@@ -39,7 +40,7 @@ with tab8:
             v_temp=vs[vs['Giornata']==gio]
             for i in list(range(v_temp.shape[0])):
                 s_chart.add_trace(go.Bar(y=[v_temp.iloc[i,2]], x=[gio],name=v_temp.iloc[i,1],orientation='v'))
-        s_chart.update_layout(barmode='relative')
+        s_chart.update_layout(barmode='relative', showlegend=False)
         st.plotly_chart(s_chart, use_container_width=True)
 with tab9:
     vb = voti_arricchiti()[voti_arricchiti()['Stagione']==sel_sea]

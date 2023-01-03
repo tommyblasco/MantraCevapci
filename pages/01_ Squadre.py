@@ -1,3 +1,4 @@
+import streamlit
 from funzioni import *
 
 st.title("Squadre")
@@ -98,6 +99,15 @@ with tab2:
                 st.dataframe(his_ulmi)
     with st.expander("Precedenti"):
         st.dataframe(precedenti(team=sel_team))
+    with st.expander("Le bandiere"):
+        st.write('Numero di giorni in squadra')
+        msel=mercato[(mercato['A']==sel_team) & (pd.notnull(mercato['TP']))]
+        msel['ddif']=[(x-y).days if x<date.today() else (date.today()-y.date()).days for x,y in zip(msel['TP'],msel['Data'])]
+        band=msel.groupby(['Nome'],as_index=False).agg({'ddif':'sum'}).sort_values(by=['ddif'],ascending=False)
+        n = st.slider('Numero di bandiere da visualizzare', min_value=1, max_value=10,value=5)
+        barband=go.Figure([go.Bar(x=band.iloc[:n,1], y=band.iloc[:n,0],orientation='h')])
+        barband.update_layout(yaxis={'categoryorder': 'total ascending'})
+        st.plotly_chart(barband,use_container_width=True)
 with tab3:
     col10, col11 = st.columns(2)
     with col10:
@@ -169,7 +179,7 @@ with tab5:
             bil_graph.add_trace(go.Bar(y=[-spese.iloc[i,3]], x=["Spese"],name=spese.iloc[i,1],orientation='v'))
         for k in list(range(entrate.shape[0])):
             bil_graph.add_trace(go.Bar(y=[entrate.iloc[k, 3]], x=["Entrate"], name=entrate.iloc[k, 1], orientation='v'))
-        bil_graph.update_layout(barmode='relative')
+        bil_graph.update_layout(barmode='relative',showlegend=False)
         st.plotly_chart(go.FigureWidget(data=bil_graph), use_container_width=True)
     with col15:
         st.metric("Bilancio", "€{:,.2f}".format(sum(entrate['Tot'])+sum(spese['Tot'])))
