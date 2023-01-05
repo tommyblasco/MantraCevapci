@@ -1,7 +1,7 @@
 from funzioni import *
 
 st.title("Stats Campionato")
-sel_sea=st.selectbox('Scegli una stagione:',tuple(set(campionato['Stagione'])))
+sel_sea=st.selectbox('Scegli una stagione:',tuple(sorted(campionato['Stagione'])))
 
 tab6, tab7, tab8, tab9 = st.tabs(["Classifiche stagionali","Classifica perpetua","Money","Top11"])
 with tab6:

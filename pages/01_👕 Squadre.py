@@ -3,7 +3,7 @@ from funzioni import *
 
 st.title("Squadre")
 
-list_team=tuple(set([x for x in mercato['A'] if str(x) != 'nan']))
+list_team=tuple(sorted([x for x in mercato['A'] if str(x) != 'nan']))
 
 sel_team=st.selectbox('Scegli una squadra',list_team)
 
