@@ -1,7 +1,7 @@
 from funzioni import *
 
 st.title("Giocatori")
-sel_player=st.selectbox('Scegli un giocatore:',tuple(sorted(giocatori['ID'])))
+sel_player=st.selectbox('Scegli un giocatore:',tuple(sorted(set(giocatori['ID']))))
 
 tab10, tab11 = st.tabs(["Forma","Carriera"])
 with tab10:
