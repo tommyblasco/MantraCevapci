@@ -9,7 +9,6 @@ sel_team=st.selectbox('Scegli una squadra',list_team)
 
 rosa=rosa_oggi(team=sel_team)
 rosa['Data nascita']=[x.date() for x in rosa['Data nascita']]
-rosa['Fine prest']=[x.date() for x in rosa['Fine prest']]
 rosa['Indennizzo']=["€{:,.2f}".format(x) for x in rosa['Indennizzo']]
 
 col1, col2 = st.columns(2)
@@ -65,14 +64,12 @@ with tab1:
     with st.expander("Giocatori in prestito"):
         if prestito_players(team=sel_team).shape[0]>0:
             dflp=prestito_players(team=sel_team)
-            dflp['TP']=[x.date() for x in dflp['TP']]
             st.dataframe(dflp)
         else:
             st.write("Nessun giocatore attualmente in prestito")
     with st.expander("Primavera"):
         if primav_players(team=sel_team).shape[0] > 0:
             dfpp = primav_players(team=sel_team)
-            dfpp['TP'] = [x.date() for x in dfpp['TP']]
             st.dataframe(dfpp)
         else:
             st.write("Nessun giocatore attualmente in primavera")
@@ -102,7 +99,7 @@ with tab2:
     with st.expander("Le bandiere"):
         st.write('Numero di giorni in squadra')
         msel=mercato[(mercato['A']==sel_team) & (pd.notnull(mercato['TP']))]
-        msel['ddif']=[(x-y).days if x<date.today() else (date.today()-y.date()).days for x,y in zip(msel['TP'],msel['Data'])]
+        msel['ddif']=[(x-y).days if x<date.today() else (date.today()-y).days for x,y in zip(msel['TP'],msel['Data'])]
         band=msel.groupby(['Nome'],as_index=False).agg({'ddif':'sum'}).sort_values(by=['ddif'],ascending=False)
         n = st.slider('Numero di bandiere da visualizzare', min_value=1, max_value=10,value=5)
         barband=go.Figure([go.Bar(x=band.iloc[:n,1], y=band.iloc[:n,0],orientation='h')])
