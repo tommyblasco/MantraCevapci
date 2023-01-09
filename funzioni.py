@@ -69,6 +69,11 @@ moduli=load_data("Moduli")
 grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
 
+try:
+    mercato['Data']=[x.date() for x in mercato['Data']]
+    mercato['TP']=[x.date() for x in mercato['TP']]
+except:
+    pass
 mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
 ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
 ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
