@@ -8,6 +8,7 @@ Created on Wed Oct 14 11:31:20 2020
 import pandas as pd
 import numpy as np
 import streamlit as st
+from github import Github
 from datetime import datetime, timedelta, date
 import streamlit.components.v1 as components
 from urllib.request import urlopen
@@ -18,6 +19,9 @@ import plotly.graph_objects as go
 from raceplotly.plots import barplot
 
 stagione_in_corso='2022-23'
+
+conn_g=Github("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")
+repo_mantra=conn_g.get_user("tommyblasco").get_repo("MantraCevapci")
 
 @st.cache
 def load_images(team):
@@ -64,7 +68,6 @@ voti=load_data("Voti_new")
 moduli=load_data("Moduli")
 grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
-
 
 mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
 ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
@@ -174,7 +177,7 @@ def billato(seas):
 
 # rose actual
 def rosa_oggi(team):
-    market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['A']==team)]
+    market_now = mercato[(mercato['Data'] <= date.today()) & (mercato['TP'] > date.today()) & (mercato['A']==team)]
     gio_con = pd.merge(giocatori, market_now[['Nome', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',how='inner')
     gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], left_on='ID', right_on='Nome',how='left')
     gio_con_rq = pd.merge(gio_con_r, quotazioni[quotazioni['Stagione'] == max(quotazioni['Stagione'])], left_on='ID',right_on='Nome', how='left')
@@ -185,36 +188,36 @@ def rosa_oggi(team):
     gio_con_rq['Età'] = [(datetime.today() - x) // timedelta(days=365.2425) for x in gio_con_rq['Data nascita']]
 
     def cond_indenn(x):
-        if (((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_dif) & (
+        if (((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_dif) & (
                 x['QA'] * 0.1 >= x['VA'])) | (
-                ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_cen) & (
+                ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_cen) & (
                 x['QA'] * 0.2 >= x['VA'])) | (
-                ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_att) & (
+                ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_att) & (
                 x['QA'] * 0.3 >= x['VA'])):
             return round(max(x['VA'], 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_dif) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_dif) & (
                 x['QA'] * 0.1 < x['VA']):
             return round(max(x['QA'] * 0.1, 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_cen) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_cen) & (
                 x['QA'] * 0.2 < x['VA']):
             return round(max(x['QA'] * 0.2, 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_att) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) >= 1) & (x['Ruolo'] in ruoli_att) & (
                 x['QA'] * 0.3 < x['VA']):
             return round(max(x['QA'] * 0.3, 0.05), 2)
-        elif (((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_dif) & (
+        elif (((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_dif) & (
                 x['QA'] * 0.1 >= x['VA'])) | (
-                ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_cen) & (
+                ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_cen) & (
                 x['QA'] * 0.2 >= x['VA'])) | (
-                ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_att) & (
+                ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_att) & (
                 x['QA'] * 0.3 >= x['VA'])):
             return round(max(x['VA'] / 2, 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_dif) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_dif) & (
                 x['QA'] * 0.1 < x['VA']):
             return round(max(x['QA'] * 0.1 / 2, 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_cen) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_cen) & (
                 x['QA'] * 0.2 < x['VA']):
             return round(max(x['QA'] * 0.2 / 2, 0.05), 2)
-        elif ((x['Fine prest'] - datetime.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_att) & (
+        elif ((x['Fine prest'] - date.today()) // timedelta(days=365.2425) < 1) & (x['Ruolo'] in ruoli_att) & (
                 x['QA'] * 0.3 < x['VA']):
             return round(max(x['QA'] * 0.3 / 2, 0.05), 2)
 
@@ -222,13 +225,13 @@ def rosa_oggi(team):
     return gio_con_rq[['Nome','Data nascita','Luogo nascita','Nazionalità','Età','Ruolo','Contratto','Fine prest','Indennizzo','url']]
 
 def prestito_players(team):
-    market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['Da'] == team) & (mercato['deco_op']=='PRE')]
+    market_now = mercato[(mercato['Data'] <= date.today()) & (mercato['TP'] > date.today()) & (mercato['Da'] == team) & (mercato['deco_op']=='PRE')]
     gio_con = pd.merge(giocatori[['ID']], market_now[['Nome', 'A', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',how='inner').drop('ID',axis=1)
     gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], on='Nome',how='left')
     return gio_con_r
 
 def primav_players(team):
-    market_now = mercato[(mercato['Data'] <= datetime.today()) & (mercato['TP'] > datetime.today()) & (mercato['A'] == team) & (mercato['Primavera']=='P')]
+    market_now = mercato[(mercato['Data'] <= date.today()) & (mercato['TP'] > date.today()) & (mercato['A'] == team) & (mercato['Primavera']=='P')]
     gio_con = pd.merge(giocatori[['ID']], market_now[['Nome', 'TP']], left_on='ID', right_on='Nome',how='inner').drop('ID',axis=1)
     gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], on='Nome',how='left')
     return gio_con_r
@@ -362,3 +365,125 @@ def player_cards(squad):
         img_drw.text((500, 740), "Indennizzo", font=xsmallFont, fill=(0, 0, 0))
         list_img.append(cart.convert('RGBA'))
     return list_img
+
+def trattativa(s,day,is1,is2):
+    stagione,giorno,da,a,nome,spesa_a,tipo_op,c_con,tp,prim=[],[],[],[],[],[],[],[],[],[]
+    if len(is1['Acquisti'])>0:
+        for a1 in list(range(len(is1['Acquisti']))):
+            stagione.append(s)
+            giorno.append(day)
+            da.append(is2['Team'])
+            a.append(is1['Team'])
+            nome.append(is1['Acquisti'][a1]['Nome'])
+            if len(is1['Acquisti'])>1:
+                spesa_a.append(round(is1['Spesa']/len(is1['Acquisti']),2))
+            else:
+                spesa_a.append(is1['Spesa'])
+            tipo_op.append(is1['Acquisti'][a1]['Contract_Type'])
+            if is1['Acquisti'][a1]['Primavera']:
+                tp.append(datetime(is1['Acquisti'][a1]['AnnoN']+21, 6, 30))
+                prim.append('P')
+                c_con.append(0)
+            else:
+                tp.append(datetime(int(stagione_in_corso[:4]) + is1['Acquisti'][a1]['Lunghezza'], 6, 30))
+                prim.append('')
+                if is1['Acquisti'][a1]['Lunghezza']==1:
+                    c_con.append(0.02)
+                else:
+                    c_con.append(0.05*(is1['Acquisti'][a1]['Lunghezza']-1) if 0.05*(is1['Acquisti'][a1]['Lunghezza']-1)>0 else 0)
+    if len(is2['Acquisti']) > 0:
+        for a2 in list(range(len(is2['Acquisti']))):
+            stagione.append(s)
+            giorno.append(day)
+            da.append(is1['Team'])
+            a.append(is2['Team'])
+            nome.append(is2['Acquisti'][a2]['Nome'])
+            if len(is2['Acquisti'])>1:
+                spesa_a.append(round(is2['Spesa']/len(is2['Acquisti']),2))
+            else:
+                spesa_a.append(is2['Spesa'])
+            tipo_op.append(is2['Acquisti'][a2]['Contract_Type'])
+            if is2['Acquisti'][a2]['Primavera']:
+                tp.append(datetime(is2['Acquisti'][a2]['AnnoN']+21, 6, 30))
+                prim.append('P')
+                c_con.append(0)
+            else:
+                tp.append(datetime(int(stagione_in_corso[:4]) + is2['Acquisti'][a2]['Lunghezza'], 6, 30))
+                prim.append('')
+                if is2['Acquisti'][a2]['Lunghezza']==1:
+                    c_con.append(0.02)
+                else:
+                    c_con.append(0.05*(is2['Acquisti'][a2]['Lunghezza']-1) if 0.05*(is2['Acquisti'][a2]['Lunghezza']-1)>0 else 0)
+    entrata_da=spesa_a
+    new_tratt=pd.DataFrame({'Stagione':stagione,'Data':giorno,'Da':da,'A':a,'Nome':nome,'Spesa_A':spesa_a,
+                            'Entrata_Da':entrata_da,'Tipo_operazione':tipo_op,'Costo_contratto':c_con,'TP':[x.date() for x in tp],'Primavera':prim})
+    pre=new_tratt[new_tratt['Tipo_operazione'].str.contains('PRE')].sort_values(by=['Nome']).reset_index()
+    new_tratt.loc[new_tratt['Nome'].isin(pre['Nome']),'Costo_contratto']=0.0
+    if pre.shape[0]>0:
+        pl_pre=mercato[mercato['Nome'].isin(pre['Nome'])].groupby('Nome').agg({'TP': 'max'}).reset_index()
+        pl_pre=pl_pre[pl_pre['TP']>date(int(stagione_in_corso[:4])+1,6,30)]
+        if pl_pre.shape[0]>0:
+            new_df_pre=pd.DataFrame({'Stagione':[str(int(stagione_in_corso[:4])+1) +'-'+str(int(stagione_in_corso[5:7])+1)]*pre.shape[0],
+                                        'Data':[datetime(int(stagione_in_corso[:4])+1,7,1)]*pre.shape[0],'Da':pre['A'],'A':pre['Da'],'Nome':pre['Nome'],
+                                     'Spesa_A':[0]*pre.shape[0],'Entrata_Da':[0]*pre.shape[0],'Tipo_operazione':['DEF']*pre.shape[0],
+                                     'Costo_contratto':[0]*pre.shape[0],'TP':pl_pre['TP']
+                                     })
+            new_tratt=new_tratt.append(new_df_pre)
+    return new_tratt
+
+def update_tratt(rup):
+    m=mercato.drop('deco_op',axis=1)
+    df_up=rup[rup['Stagione']==stagione_in_corso]
+    for i in list(range(df_up.shape[0])):
+        max_tp = max(m.loc[m['Nome'] == df_up.iloc[i, 4], 'TP'])
+        m.loc[(m['Nome']==df_up.iloc[i,4]) & (m['TP']==max_tp),'TP']=df_up.iloc[i,1]
+    df_up_no_pre=df_up[~df_up['Tipo_operazione'].str.contains('PRE')]
+    q = pd.merge(quotazioni[quotazioni['Stagione'] == stagione_in_corso],df_up_no_pre[['Nome', 'Da', 'A']], on='Nome', how='inner')
+    cash_teams = df_up_no_pre.groupby(['Da', 'A'], as_index=False).agg({'Spesa_A': 'sum'})
+    tot_val = q.groupby(['Da'], as_index=False).agg({'VA': 'sum'}).rename({'VA': 'Spesa_A'}, axis=1).append(cash_teams[['A', 'Spesa_A']].rename({'A': 'Da'}, axis=1)).groupby(['Da'], as_index=False).agg({'Spesa_A': 'sum'}).rename({'Spesa_A': 'Valore'}, axis=1)
+    df1 = pd.merge(q[['Da', 'A', 'Nome', 'VA']], cash_teams[['Da', 'Spesa_A']], left_on='A', right_on='Da',how='left').drop('Da_y', axis=1).rename({'Da_x': 'Da'}, axis=1)
+    df1 = pd.merge(df1, tot_val, on='Da', how='left')
+    df1 = pd.merge(df1, tot_val, right_on='Da', left_on='A', how='left').drop('Da_y', axis=1).rename({'Da_x': 'Da'},axis=1)
+    df1['new_q'] = [round((x / y) * z, 2) for x, y, z in zip(df1['VA'], df1['Valore_x'], df1['Valore_y'])]
+    for i in list(range(df_up_no_pre.shape[0])):
+        r=df1[df1['Nome']==df_up_no_pre.iloc[i,4]]
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QI']=quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QA']
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'Diff']=0
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = r.iloc[0,7]
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = r.iloc[0, 7]
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = r.iloc[0, 7]
+    mark=m.append(rup).sort_values('Data')
+    return [quotazioni, mark]
+
+def indennizzo(s,day,da,player):
+    m = mercato.drop('deco_op', axis=1)
+    r=rosa_oggi(da)
+    r = pd.merge(r, giocatori[['Nome', 'ID']], on='Nome', how='left')
+    ind=r.loc[r['ID']==player,'Indennizzo'].item()
+    info_ind=pd.DataFrame({'Stagione':[s],'Data':[day],'Da':[da],'Nome':[player],'Spesa_A':[0],'Entrata_Da':[ind],'Tipo_operazione':['IND']})
+    max_tp = max(m.loc[m['Nome'] == player, 'TP'])
+    m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = info_ind.iloc[0, 1]
+    mark=m.append(info_ind).sort_values('Data')
+    return mark
+
+def svincolo(s,day,team,player,pre_svi):
+    m = mercato.drop('deco_op', axis=1)
+    info_svi=pd.DataFrame({'Stagione':[s],'Data':[day],'Da':[team],'A':[team],'Nome':[player],'Spesa_A':[pre_svi],'Entrata_Da':[0],'Tipo_operazione':['SVI']})
+    max_tp = max(m.loc[m['Nome'] == player, 'TP'])
+    m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = info_svi.iloc[0, 1]
+    mark = m.append(info_svi).sort_values('Data')
+    return mark
+
+def rinnovo(s,day,team,player,l_rin):
+    m = mercato.drop('deco_op', axis=1)
+    lista_spe_rin=[0.2,0.25,0.3,0.35,0.4]
+    info_rin=pd.DataFrame({'Stagione':[s],'Data':[day],'A':[team],'Nome':[player],'Spesa_A':[lista_spe_rin[l_rin-1]],'Entrata_Da':[0],'Tipo_operazione':['RIN']})
+    max_tp = max(m.loc[m['Nome'] == player, 'TP'])
+    m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = date(int(stagione_in_corso[:4])+l_rin,6,30)
+    mark = m.append(info_rin).sort_values('Data')
+    return mark
+
+def update_file_git(df,nome_file,comm_mex):
+    df1=df.to_csv(sep=";", decimal=",", date_format='%d/%m/%Y', index=False)
+    contents = repo_mantra.get_contents("Dati/"+nome_file+".csv")
+    repo_mantra.update_file("Dati/"+nome_file+".csv", comm_mex, df1, contents.sha, branch="main")
