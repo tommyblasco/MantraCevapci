@@ -20,7 +20,7 @@ from raceplotly.plots import barplot
 
 stagione_in_corso='2022-23'
 
-conn_g=Github("")
+conn_g=Github(st.secrets['TOKEN'])
 repo_mantra=conn_g.get_user("tommyblasco").get_repo("MantraCevapci")
 
 @st.cache
