@@ -454,9 +454,9 @@ def update_tratt(rup):
         r=df1[df1['Nome']==df_up_no_pre.iloc[i,4]]
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QI']=quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QA']
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'Diff']=0
-        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = r.iloc[0,7]
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = r.iloc[0, 7]
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = r.iloc[0, 7]
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
     mark=m.append(rup).sort_values('Data')
     return [quotazioni, mark]
 
