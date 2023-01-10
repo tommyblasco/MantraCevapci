@@ -7,6 +7,7 @@ Created on Wed Oct 14 11:31:20 2020
 
 import pandas as pd
 import numpy as np
+import math
 import streamlit as st
 from github import Github
 from datetime import datetime, timedelta, date
@@ -454,9 +455,9 @@ def update_tratt(rup):
         r=df1[df1['Nome']==df_up_no_pre.iloc[i,4]]
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QI']=quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QA']
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'Diff']=0
-        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
     mark=m.append(rup).sort_values('Data')
     return [quotazioni, mark]
 
