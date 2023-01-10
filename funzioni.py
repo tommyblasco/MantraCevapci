@@ -20,7 +20,7 @@ from raceplotly.plots import barplot
 
 stagione_in_corso='2022-23'
 
-conn_g=Github("")
+conn_g=Github(st.secrets['TOKEN'])
 repo_mantra=conn_g.get_user("tommyblasco").get_repo("MantraCevapci")
 
 @st.cache
@@ -69,6 +69,11 @@ moduli=load_data("Moduli")
 grafica=load_data("Grafica")
 albo_doro=load_data("Albo_doro")
 
+try:
+    mercato['Data']=[x.date() for x in mercato['Data']]
+    mercato['TP']=[x.date() for x in mercato['TP']]
+except:
+    pass
 mercato['deco_op']=['PRE' if x.startswith('PRE') else x for x in mercato['Tipo_operazione']]
 ruoli_dif=['Por','DD; DS; E','DC','DD; DC','DS; DC','DD; DC; E','DS; DC; E','DD; DS; E','DS; E','DD; E','DD; E; M','DS; E; M','DD; DS; DC']
 ruoli_cen=['E','E; M','E; W','E; C','M; C','M','C; T','C','C; W','C; W; T','W','W; T','T']
@@ -449,9 +454,9 @@ def update_tratt(rup):
         r=df1[df1['Nome']==df_up_no_pre.iloc[i,4]]
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QI']=quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'QA']
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso),'Diff']=0
-        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = r.iloc[0,7]
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = r.iloc[0, 7]
-        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = r.iloc[0, 7]
+        quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
+        quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = round(r.iloc[0,7]*0.05)/0.05 if round(r.iloc[0,7]*0.05)/0.05>0.05 else 0.05
     mark=m.append(rup).sort_values('Data')
     return [quotazioni, mark]
 
