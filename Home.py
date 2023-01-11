@@ -40,7 +40,7 @@ with st.sidebar:
     with cols1:
         for ht in last_day['Home']:
             img=Image.open(BytesIO(requests.get(load_images(ht)[0]).content))
-            img_rsz=img.resize((80,80))
+            img_rsz=img.resize((60,60))
             st.image(img_rsz)
     with cols2:
         for gfh in last_day['GH']:
@@ -51,5 +51,5 @@ with st.sidebar:
     with cols4:
         for ha in last_day['Away']:
             img = Image.open(BytesIO(requests.get(load_images(ha)[0]).content))
-            img_rsz=img.resize((80,80))
+            img_rsz=img.resize((60,60))
             st.image(img_rsz)
