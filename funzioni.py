@@ -332,6 +332,7 @@ def precedenti(team):
     db['Bilancio']=[x-y for x,y in zip(db['V'],db['P'])]
     return db.sort_values(by=['Bilancio'],ascending=False)
 
+@st.cache
 def player_cards(squad):
     list_img = []
     name_font = requests.get('http://themes.googleusercontent.com/static/fonts/racingsansone/v1/1r3DpWaCiT7y3PD4KgkNyO921tOcMok2fHawGmtxikA.ttf')

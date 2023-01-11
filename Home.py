@@ -39,13 +39,17 @@ with st.sidebar:
     cols1, cols2, cols3, cols4 = st.columns(4)
     with cols1:
         for ht in last_day['Home']:
-            st.image(load_images(ht)[0])
+            img=Image.open(BytesIO(requests.get(load_images(ht)[0]).content))
+            img_rsz=img.resize((100,100))
+            st.image(img_rsz)
     with cols2:
         for gfh in last_day['GH']:
-            st.write(gfh)
+            st.markdown('<h1 style="font-size:35px;">{}</h1>'.format(str(gfh)), unsafe_allow_html=True)
     with cols3:
         for gfa in last_day['GA']:
-            st.write(gfa)
+            st.markdown('<h1 style="font-size:35px;">{}</h1>'.format(str(gfa)), unsafe_allow_html=True)
     with cols4:
         for ha in last_day['Away']:
-            st.image(load_images(ha)[0])
+            img = Image.open(BytesIO(requests.get(load_images(ha)[0]).content))
+            img_rsz=img.resize((100,100))
+            st.image(img_rsz)
