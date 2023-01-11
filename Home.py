@@ -27,7 +27,7 @@ try:
     mx_gio=max(v_filt['Giornata'])
     v_filt_last=v_filt[v_filt['Giornata']==mx_gio]
     col5.metric("💰 Monte stipendi attuale",'€{:,.2f}'.format(sum(v_filt['Stipendio'])),
-                delta=sum(v_filt_last['Stipendio']))
+                delta=round(sum(v_filt_last['Stipendio']),2))
 except:
     col5.metric("💰 Monte stipendi attuale",'€ 0')
 col6.metric("⚽ Giornate giocate",int(campionato.shape[0]/5))
