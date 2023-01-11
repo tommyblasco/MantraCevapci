@@ -30,3 +30,22 @@ col6.metric("⚽ Giornate giocate",int(campionato.shape[0]/5))
 
 st.info("🏅 Numero di squadre che si qualificheranno alla prossima stagione ULMI: 4")
 st.info("📝 Leggi il [regolamento](https://docs.google.com/document/d/1Di1ChzoPGegAzvwQeXAXGv_CyMjieh9879f2cwKhA0g/edit)")
+
+with st.sidebar:
+    st.write('Ultima giornata:')
+    max_gio=int(max(campionato.loc[campionato['Stagione']==stagione_in_corso,'Giornata']))
+    st.text('Stagione '+stagione_in_corso+', Giornata '+str(max_gio))
+    last_day=campionato[(campionato['Stagione']==stagione_in_corso) & (campionato['Giornata']==max_gio)]
+    cols1, cols2, cols3, cols4 = st.columns(4)
+    with cols1:
+        for ht in last_day['Home']:
+            st.image(load_images(ht)[0])
+    with cols2:
+        for gfh in last_day['GH']:
+            st.write(gfh)
+    with cols3:
+        for gfa in last_day['GA']:
+            st.write(gfa)
+    with cols4:
+        for ha in last_day['Away']:
+            st.image(load_images(ha)[0])
