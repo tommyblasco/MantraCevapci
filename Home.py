@@ -44,10 +44,10 @@ with st.sidebar:
             st.image(img_rsz)
     with cols2:
         for gfh in last_day['GH']:
-            st.markdown('<h1 style="font-size:35px;">{}</h1>'.format(str(gfh)), unsafe_allow_html=True)
+            st.markdown('<h1 style="font-size:30px;">{}</h1>'.format(str(gfh)), unsafe_allow_html=True)
     with cols3:
         for gfa in last_day['GA']:
-            st.markdown('<h1 style="font-size:35px;">{}</h1>'.format(str(gfa)), unsafe_allow_html=True)
+            st.markdown('<h1 style="font-size:30px;">{}</h1>'.format(str(gfa)), unsafe_allow_html=True)
     with cols4:
         for ha in last_day['Away']:
             img = Image.open(BytesIO(requests.get(load_images(ha)[0]).content))
