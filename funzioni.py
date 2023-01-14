@@ -299,7 +299,7 @@ def b11(seas,gio):
 def pred_b11(df,seas):
     lg_sort = df.sort_values('Index', ascending=False)
     lg_sort.reset_index(drop=True, inplace=True)
-    m = moduli[moduli['Stagione'] == seas]
+    m = moduli[moduli['Stagione'] == seas].drop('Stagione',axis=1)
     f_df = pd.DataFrame()
     for modul in list(set(m['Modulo'])):
         modulis = m[m['Modulo'] == modul]
