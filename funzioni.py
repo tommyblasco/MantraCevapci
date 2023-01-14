@@ -605,7 +605,7 @@ def prob_form():
     team = []
     for i in list(range(1, 21)):
         team.append(page_soup1.find_all('tr')[i].text.split('\n        ')[1].split('\n    ')[0].upper())
-    df_diff = pd.DataFrame({'Opponent': team, 'Difficulty': [round(x,2) for x in list(np.arange(0.05,1,0.05))]})
+    df_diff = pd.DataFrame({'Opponent': team, 'Difficulty': [round(x,2) for x in list(np.arange(0.05,1.01,0.05))]})
     gs_df = pd.merge(gs, df_diff, on='Opponent', how='left')
     return gs_df
 
