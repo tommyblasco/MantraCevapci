@@ -15,6 +15,8 @@ import streamlit.components.v1 as components
 from urllib.request import urlopen
 from PIL import Image, ImageDraw, ImageFont
 import requests
+from bs4 import BeautifulSoup as soup
+from collections import Counter
 from io import BytesIO
 import plotly.graph_objects as go
 from raceplotly.plots import barplot
@@ -293,6 +295,57 @@ def b11(seas,gio):
     bline['Modulo']=[int(x) for x in bline['Modulo']]
     return bline
 
+
+def pred_b11(df,seas):
+    lg_sort = df.sort_values('Index', ascending=False)
+    lg_sort.reset_index(drop=True, inplace=True)
+    m = moduli[moduli['Stagione'] == seas]
+    f_df = pd.DataFrame()
+    for modul in list(set(m['Modulo'])):
+        modulis = m[m['Modulo'] == modul]
+        df = pd.merge(lg_sort, modulis, on='Ruolo', how='left')
+        df['Pos'] = df.iloc[:, 4:].apply(lambda x: x.index[x.astype(bool)].tolist(), 1)
+        p, n, lun = [], [], []
+        for i in list(range(df.shape[0])):
+            for l in df.iloc[i, 15]:
+                p.append(l)
+                n.append(df.iloc[i, 0])
+                lun.append(len(df.iloc[i, 15]))
+        riep = pd.DataFrame({'Pos': p, 'N': n, 'Len': lun})
+        f2 = pd.merge(riep, df.iloc[:, :4], left_on='N', right_on='Giocatori', how='left')
+        f2 = f2.drop('N', axis=1).drop('Len', axis=1).sort_values('Index', ascending=False)
+        Bsel = pd.merge(f2, f2.groupby('Pos', as_index=False).agg({'Index': 'max', 'Giocatori': 'first'}),
+                        on=['Pos', 'Index', 'Giocatori'], how='right')
+        Bsel['ID'] = [x + y for x, y in zip(Bsel['Pos'], Bsel['Giocatori'])]
+        f2['ID'] = [x + y for x, y in zip(f2['Pos'], f2['Giocatori'])]
+        sub = f2[~f2['ID'].isin(Bsel['ID'])]
+        while Bsel.shape[0] < 11:
+            Bsel.loc[Bsel.shape[0]] = ['', '', '', 0, Bsel.iloc[0, 4], '']
+        count_dup = sum(pd.value_counts(list(filter(None, Bsel['Giocatori']))).to_frame().reset_index()[0] != 1)
+        while count_dup != 0:
+            for nn in list(filter(None, list(set(Bsel['Giocatori'])))):
+                h = Bsel[Bsel['Giocatori'] == nn].shape[0]
+                while h > 1:
+                    selec = sub[sub['Pos'].isin(Bsel.loc[Bsel['Giocatori'] == nn, 'Pos'])].head(1)
+                    if selec.shape[0] > 0:
+                        Bsel[Bsel['Pos'] == selec.iloc[0, 0]] = selec.iloc[0, 0], selec.iloc[0, 1], selec.iloc[
+                            0, 2], selec.iloc[0, 3], selec.iloc[0, 4], selec.iloc[0, 5]
+                    else:
+                        Bsel = Bsel[~Bsel['Pos'].isin(Bsel.loc[Bsel['Giocatori'] == nn, 'Pos'].head(1))]
+                        Bsel.reset_index(drop=True, inplace=True)
+                        Bsel.loc[Bsel.shape[0]] = ['', '', '', 0, Bsel.iloc[0, 4], '']
+                    sub = sub[~sub['ID'].isin(selec['ID'])]
+                    h = h - 1
+            count_dup = sum(pd.value_counts(list(filter(None, Bsel['Giocatori']))).to_frame().reset_index()[0] != 1)
+        f_df = f_df.append(Bsel.iloc[:, :5])
+    bmodglob = f_df.groupby('Modulo', as_index=False).agg({'Index': sum}).sort_values(by=['Index'], ascending=False)
+    bmodglob.reset_index(drop=True, inplace=True)
+    bmod = bmodglob.head(1)
+    f_df.sort_index(inplace=True)
+    bline = f_df[f_df['Modulo'].apply(int) == int(bmod['Modulo'])]
+    bline['Modulo'] = [int(x) for x in bline['Modulo']]
+    return bline
+
 #controclassifica senza calendario
 def controclass(seas):
     db = campionato[campionato['Stagione'] == seas]
@@ -494,3 +547,82 @@ def update_file_git(df,nome_file,comm_mex):
     df1=df.to_csv(sep=";", decimal=",", date_format='%d/%m/%Y', index=False)
     contents = repo_mantra.get_contents("Dati/"+nome_file+".csv")
     repo_mantra.update_file("Dati/"+nome_file+".csv", comm_mex, df1, contents.sha, branch="main")
+
+@st.cache
+def prob_form():
+    page = "https://www.fantacalcio.it/probabili-formazioni-serie-a"
+    page_html = requests.Session().get(page, headers={
+        "User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}).text
+    page_soup = soup(page_html, "html.parser")
+    l = page_soup.find_all('a', {"player-name player-link"})
+    p = page_soup.find_all('div', {'progress-value'})
+    p = [int(x.text.split('%')[0]) for x in p]
+
+    infortunati = []
+    for i in list(range(len(page_soup.find_all('ul', 'injured-list')))):
+        if len(page_soup.find_all('ul', 'injured-list')[i]) > 1:
+            for k in list(range(1, len(page_soup.find_all('ul', 'injured-list')[i].text.split('\n\n')), 3)):
+                infortunati.append(
+                    page_soup.find_all('ul', 'injured-list')[i].text.split('\n\n')[k].split('\n')[-1].strip())
+    squal = []
+    for s in list(range(len(page_soup.find_all('section', 'suspendeds')))):
+        squal.extend(page_soup.find_all('section', 'suspendeds')[s].text.split('\n\n\n\n\n')[1:])
+    squal = [x.split('    \n    ')[1:] for x in squal if 'Nessun calciatore' not in x]
+    squal = [x.split('\n\n\n\n')[0] for sublist in squal for x in sublist]
+
+    diff = []
+    for d in list(range(len(page_soup.find_all('section', 'cautioneds')))):
+        diff.extend(page_soup.find_all('section', 'cautioneds')[d].text.split('\n\n\n\n\n')[1:])
+    diff = [x.split('    \n    ')[1:] for x in diff if 'Nessun calciatore' not in x]
+    diff = [x.split('\n\n\n\n')[0] for sublist in diff for x in sublist]
+
+    g, sq, link = [], [], []
+    for i in list(range(len(l))):
+        if "Campioncino" not in str(l[i]):
+            g.append(l[i].text.split('\n')[-1].strip())
+            sq.append(l[i]['href'].split('/squadre/')[1].split('/')[0].upper())
+            link.append(l[i]['href'])
+
+    dic_count = Counter(g)
+    diff_to_remove = [i for i in diff if dic_count[i] == 1]
+    gs = pd.DataFrame({'Giocatori': g, 'Squadra': sq,'Link':link}).drop_duplicates()
+    gs = gs[
+        (~gs['Giocatori'].isin(infortunati)) & (~gs['Giocatori'].isin(squal)) & (~gs['Giocatori'].isin(diff_to_remove))]
+    gs['Giocatori'] = [x.upper() for x in gs['Giocatori']]
+    gs['Prob'] = p
+    gsgrp = gs.groupby('Squadra', sort=False, as_index=False).agg({'Giocatori': 'count'})
+    opp = []
+    for i in list(range(gsgrp.shape[0])):
+        if (i % 2) == 0:
+            opp.extend([gsgrp.iloc[i + 1, 0]] * gsgrp.iloc[i, 1])
+        else:
+            opp.extend([gsgrp.iloc[i - 1, 0]] * gsgrp.iloc[i, 1])
+    gs['Opponent'] = opp
+
+    page1 = "https://www.fantacalcio.it/serie-a/classifica"
+    page_html1 = requests.Session().get(page1, headers={"User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}).text
+    page_soup1 = soup(page_html1, "html.parser")
+    team = []
+    for i in list(range(1, 21)):
+        team.append(page_soup1.find_all('tr')[i].text.split('\n        ')[1].split('\n    ')[0].upper())
+    df_diff = pd.DataFrame({'Opponent': team, 'Difficulty': [round(x,2) for x in list(np.arange(0.05,1,0.05))]})
+    gs_df = pd.merge(gs, df_diff, on='Opponent', how='left')
+    return gs_df
+
+@st.cache
+def stats_web(df):
+    mfv, pre = [], []
+    for lk in df['Link']:
+        page = lk
+        page_html = requests.Session().get(page, headers={"User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}).text
+        page_soup = soup(page_html, "html.parser")
+        try:
+            mfv.append(round(float(page_soup.find_all('span', 'badge badge-info avg')[0].text.replace(',', '.')), 2))
+            pre.append(int(page_soup.find_all('td', 'value')[0].text))
+        except:
+            mfv.append(np.nan)
+            pre.append(np.nan)
+    df['MFV']=mfv
+    df['Pre']=pre
+    df=df.drop('Link',axis=1)
+    return df
