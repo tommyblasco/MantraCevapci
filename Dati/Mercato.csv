@@ -298,7 +298,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2019-20;2019-09-03;;Der Holzfaller;ILICIC;2,5;0,0;DEF;0,15;2021-08-31;
 2019-20;2019-09-03;;FK Partizena;DEFREL;0,2;0,0;DEF;0,1;2020-09-11;
 2019-20;2019-09-03;;Der Holzfaller;ZAPATA D.;3,55;0,0;DEF;0,2;2021-01-04;
-2019-20;2019-09-03;;FK Partizena;CASTROVILLI;0,4;0,0;DEF;0,1;2023-06-30;
+2019-20;2019-09-03;;FK Partizena;CASTROVILLI;0,4;0,0;DEF;0,1;2023-01-25;
 2019-20;2019-09-03;;ACDF;BASELLI;0,7;0,0;DEF;0,05;2021-06-30;
 2019-20;2019-09-03;;ACDF;SANTANDER;0,55;0,0;DEF;0,02;2020-08-31;
 2019-20;2019-09-03;;Big Black Cimamori;MILIK;3,8;0,0;DEF;0,15;2023-06-30;
@@ -718,7 +718,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2020-21;2021-01-12;ACDF;;BARTOLOMEI;0,0;0,05;IND;;;
 2020-21;2021-01-12;Parter;;LIROLA;0,0;0,4;IND;;;
 2020-21;2021-01-12;Vanndoria;Agghiaggiande;CALLEJON;0,0;0,0;DEF;0,1;2022-07-16;
-2020-21;2021-01-14;Olympique Bidet;FK Partizena;MURIEL;5,0;5,0;DEF;0,15;2023-01-25;
+2020-21;2021-01-14;Olympique Bidet;FK Partizena;MURIEL;5,0;5,0;DEF;0,15;2024-06-30;
 2020-21;2021-01-15;FK Partizena;Agghiaggiande;MAGALLAN;0,3;0,3;PRE 6m;;2021-06-30;
 2020-21;2021-01-20;FK Partizena;Los Angeles;MEITE';0,0;0,0;DEF;0,0;2021-07-24;
 2020-21;2021-01-20;Los Angeles;FK Partizena;EKDAL;0,0;0,0;DEF;0,0;2022-01-03;
@@ -1283,7 +1283,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;2022-07-11;Los Angeles;Vanndoria;SILVESTRI;0,0;0,0;DEF;0,1;2025-06-30;
 2022-23;2022-07-11;Los Angeles;Vanndoria;NIKOLAOU;0,0;0,0;DEF;0,05;2024-06-30;
 2022-23;2022-07-11;Vanndoria;Los Angeles;MARUSIC;0,0;0,0;DEF;0,15;2026-06-30;
-2022-23;2022-07-11;Vanndoria;Los Angeles;PASALIC;0,0;0,0;DEF;0,15;2026-06-30;
+2022-23;2022-07-11;Vanndoria;Los Angeles;PASALIC;0,0;0,0;DEF;0,15;2023-01-25;
 2022-23;2022-07-11;Los Angeles;Big Black Cimamori;DUNCAN;0,0;0,0;DEF;0,05;2024-06-30;
 2022-23;2022-07-12;FK Partizena;Los Angeles;ASLLANI;1,05;1,05;DEF;;2023-06-30;P
 2022-23;2022-07-12;CSKA Moscow Mule;;OSPINA;0,0;0,9;IND;;;
@@ -1326,7 +1326,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;2022-07-16;Olympique Bidet;;KEITA B.;0,0;2,2;IND;;;
 2022-23;2022-07-16;Olympique Bidet;;OKEREKE;0,0;1,9;IND;;;
 2022-23;2022-07-16;CSKA Moscow Mule;Olympique Bidet;HENRY;0,6;0,6;DEF;0,1;2025-06-30;
-2022-23;2022-07-18;Big Black Cimamori;Los Angeles;IKONE';4,25;4,25;DEF;0,1;2023-01-25;
+2022-23;2022-07-18;Big Black Cimamori;Los Angeles;IKONE';4,25;4,25;DEF;0,1;2025-06-30;
 2022-23;2022-07-19;Parter;Olympique Bidet;CRISTANTE;1,95;1,95;DEF;0,1;2025-06-30;
 2022-23;2022-07-19;ACDF;;WALUKIEWICZ;0,0;0,05;IND;;;
 2022-23;2022-07-19;Olympique Bidet;Big Black Cimamori;AINA;0,3;0,3;DEF;0,02;2023-06-30;
@@ -1557,8 +1557,8 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;2023-01-10;CSKA Moscow Mule;FK Partizena;REBIC;0,0;0,0;DEF;0,05;2024-06-30;
 2022-23;2023-01-14;Der Holzfaller;;MALINOVSKYI;0,0;0,45;IND;;;
 2022-23;2023-01-14;ACDF;;VILLAR;0,0;0,05;IND;;;
-2022-23;2023-01-25;Los Angeles;FK Partizena;IKONE';0,0;0,0;DEF;0,1;2025-06-30;
-2022-23;2023-01-25;FK Partizena;Los Angeles;MURIEL;1,0;1,0;DEF;0,05;2024-06-30;
+2022-23;2023-01-25;Los Angeles;FK Partizena;PASALIC;1,0;1,0;;0,1;2025-06-30;
+2022-23;2023-01-25;FK Partizena;Los Angeles;CASTROVILLI;0,0;0,0;;0,2;2027-06-30;
 2023-24;2023-07-01;Der Holzfaller;ACDF;BARAK;0,0;0,0;DEF;;2024-06-30;
 2023-24;2023-07-01;Olympique Bidet;FK Partizena;TERRACCIANO;0,0;0,0;DEF;;2024-06-30;
 2023-24;2023-07-01;Los Angeles;FK Partizena;SANABRIA;0,0;0,0;DEF;;2024-06-30;
