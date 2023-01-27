@@ -1579,7 +1579,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;25/01/2023;Parter;Olympique Bidet;PINAMONTI;0;0;DEF;0,15;30/06/2026;
 2022-23;26/01/2023;Parter;;HRISTOV;0;0,1;IND;;;
 2022-23;26/01/2023;Parter;;KASIUS;0;0,2;IND;;;
-2022-23;27/01/2023;CSKA Moscow Mule;Big Black Cimamori;MAKENGO;0,8;0,8;;0,05;30/06/2024;
+2022-23;27/01/2023;CSKA Moscow Mule;Big Black Cimamori;MAKENGO;0,8;0,8;DEF;0,05;30/06/2024;
 2022-23;27/01/2023;Parter;CSKA Moscow Mule;CAMBIASO;1;1;DEF;0,1;30/06/2025;
 2022-23;27/01/2023;Parter;CSKA Moscow Mule;LOCATELLI;1;1;DEF;0,1;30/06/2025;
 2022-23;27/01/2023;Parter;CSKA Moscow Mule;SOTTIL;1;1;DEF;0,1;30/06/2025;
