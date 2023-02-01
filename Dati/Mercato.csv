@@ -926,7 +926,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2021-22;21/08/2021;CSKA Moscow Mule;ACDF;ZAPATA D.;12;12;DEF;0,1;30/06/2024;
 2021-22;21/08/2021;FK Partizena;Parter;PINAMONTI;1,55;1,55;DEF;0,2;25/01/2023;
 2021-22;22/08/2021;Big Black Cimamori;FK Partizena;MARIO RUI;0;0;DEF;0,1;30/06/2024;
-2021-22;22/08/2021;FK Partizena;Big Black Cimamori;MULDUR;0,2;0,2;DEF;0,05;30/06/2023;
+2021-22;22/08/2021;FK Partizena;Big Black Cimamori;MULDUR;0,2;0,2;DEF;0,05;31/01/2023;
 2021-22;25/08/2021;ACDF;;DI CARMINE;0;0,05;IND;;;
 2021-22;25/08/2021;Der Holzfaller;ACDF;BARAK;4,8;4,8;DEF;0,1;20/08/2022;
 2021-22;25/08/2021;ACDF;Der Holzfaller;ARTHUR;4,05;4,05;DEF;0,15;03/01/2022;
@@ -1081,7 +1081,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2021-22;03/01/2022;Der Holzfaller;FK Partizena;WALACE;0,2;0,2;DEF;0,05;03/01/2023;
 2021-22;03/01/2022;FK Partizena;;ADRIEN SILVA;0;0,05;IND;;;
 2021-22;03/01/2022;CSKA Moscow Mule;Olympique Bidet;RABIOT;1,5;1,5;DEF;0,05;30/06/2023;
-2021-22;03/01/2022;FK Partizena;Big Black Cimamori;DEMME;0,3;0,3;DEF;0,05;30/06/2023;
+2021-22;03/01/2022;FK Partizena;Big Black Cimamori;DEMME;0,3;0,3;DEF;0,05;31/01/2023;
 2021-22;03/01/2022;FK Partizena;Big Black Cimamori;ZAMBO ANGUISSA;0,35;0,35;DEF;0,05;30/06/2023;
 2021-22;03/01/2022;CSKA Moscow Mule;FK Partizena;BELOTTI;5;5;DEF;0,15;30/07/2022;
 2021-22;03/01/2022;Parter;CSKA Moscow Mule;BARROW;6;6;DEF;0,1;12/07/2022;
@@ -1603,8 +1603,10 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;31/01/2023;Olympique Bidet;;CARBONI;0;0,1;IND;;;
 2022-23;31/01/2023;Big Black Cimamori;;HONGLA;0;0,05;IND;;;
 2022-23;31/01/2023;Big Black Cimamori;;TRAORE' HJ.;0;0,8;IND;;;
-2022-23;31/01/2023;FK Partizena;;BERESZYNSKI;0,2;0;SVI;;;
-2022-23;31/01/2023;Vanndoria;;DE SILVESTRI;0,2;0;SVI;;;
+2022-23;31/01/2023;FK Partizena;FK Partizena;BERESZYNSKI;0,2;0;SVI;;;
+2022-23;31/01/2023;Vanndoria;Vanndoria;DE SILVESTRI;0,2;0;SVI;;;
+2022-23;31/01/2023;Big Black Cimamori;Big Black Cimamori;MULDUR;0,2;0;SVI;;;
+2022-23;31/01/2023;Big Black Cimamori;Big Black Cimamori;DEMME;0,2;0;SVI;;;
 2023-24;01/07/2023;ACDF;Der Holzfaller;KOOPMEINERS;0;0;DEF;;30/06/2026;
 2023-24;01/07/2023;Der Holzfaller;ACDF;BARAK;0;0;DEF;;30/06/2024;
 2023-24;01/07/2023;Olympique Bidet;FK Partizena;TERRACCIANO;0;0;DEF;;30/06/2024;
