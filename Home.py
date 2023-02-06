@@ -34,6 +34,7 @@ col6.metric("⚽ Giornate giocate",int(campionato.shape[0]/5))
 
 st.info("🏅 Numero di squadre che si qualificheranno alla prossima stagione ULMI: 4")
 st.info("📝 Leggi il [regolamento](https://docs.google.com/document/d/1Di1ChzoPGegAzvwQeXAXGv_CyMjieh9879f2cwKhA0g/edit)")
+st.info("💳 [Salda il conto](https://www.paypal.com/paypalme/mantracevapci?country.x=IT&locale.x=it_IT)")
 
 # with st.sidebar:
 #     st.write('Ultima giornata:')
