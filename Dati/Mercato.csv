@@ -1097,7 +1097,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2021-22;03/01/2022;Parter;CSKA Moscow Mule;TONALI;0,5;0,5;DEF;0,15;30/06/2025;
 2021-22;03/01/2022;Big Black Cimamori;FK Partizena;FREULER;0;0;DEF;0,15;14/08/2022;
 2021-22;03/01/2022;Big Black Cimamori;Der Holzfaller;ZANIOLO;7;7;DEF;0,2;30/06/2026;
-2021-22;03/01/2022;Olympique Bidet;Big Black Cimamori;COLLEY;0;0;DEF;0,05;30/06/2023;
+2021-22;03/01/2022;Olympique Bidet;Big Black Cimamori;COLLEY;0;0;DEF;0,05;09/02/2023;
 2021-22;03/01/2022;Olympique Bidet;Der Holzfaller;IGOR;0;0;DEF;0,15;26/07/2022;
 2021-22;03/01/2022;CSKA Moscow Mule;;MANOLAS;0;0,2;IND;;;
 2021-22;03/01/2022;Der Holzfaller;Olympique Bidet;NUYTINCK;0,9;0,9;DEF;0,05;30/06/2023;
@@ -1653,6 +1653,7 @@ Stagione;Data;Da;A;Nome;Spesa_A;Entrata_Da;Tipo_operazione;Costo_contratto;TP;Pr
 2022-23;01/02/2023;;Olympique Bidet;BOURABIA;0,1;0;DEF;0,05;30/06/2024;
 2022-23;01/02/2023;;Der Holzfaller;D'ANDREA;0,05;0;DEF;;30/06/2025;P
 2022-23;02/02/2023;Vanndoria;Vanndoria;CAMBIAGHI;0,6;0;SVI;;;
+2022-23;09/02/2023;Big Black Cimamori;;COLLEY;0;0,05;IND;;;
 2023-24;01/07/2023;ACDF;Der Holzfaller;KOOPMEINERS;0;0;DEF;;30/06/2026;
 2023-24;01/07/2023;Der Holzfaller;ACDF;BARAK;0;0;DEF;;30/06/2024;
 2023-24;01/07/2023;Olympique Bidet;FK Partizena;TERRACCIANO;0;0;DEF;;30/06/2024;
