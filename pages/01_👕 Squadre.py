@@ -142,6 +142,13 @@ with tab4:
             st.plotly_chart(go.FigureWidget(data=tit_no), use_container_width=True)
         except:
             st.info("Stagione non ancora iniziata")
+        try:
+            si=sarri_index(team=sel_team)
+            si=si.sort_values(by=['Tit'],ascending=False).rename({'Tit':'PreFan','Voto':'PreA'})
+            st.metric("Sarri Index", np.var(si['Perc']))
+            st.dataframe(si.sort_values(by=['PreFan'],ascending=False))
+        except:
+            st.info("Stagione non ancora iniziata")
     with col13:
         st.write('Top 5 stipendi')
         try:

@@ -626,3 +626,10 @@ def stats_web(df):
     df['Pre']=pre
     df=df.drop('Link',axis=1)
     return df
+
+def sarri_index(team):
+    v=voti_arricchiti()[(voti_arricchiti()['Squadra']==team) & (voti_arricchiti()['Stagione']==stagione_in_corso)]
+    spec=v.groupby('Nome',as_index=False).agg({'Tit':'sum','Voto':'count'})
+    spec=spec[spec['Voto']>=1]
+    spec['Perc']=[round(x/y,2) for x,y in zip(spec['Tit'],spec['Voto'])]
+    return spec
