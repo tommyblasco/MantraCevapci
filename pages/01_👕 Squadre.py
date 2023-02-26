@@ -109,6 +109,11 @@ with tab3:
                        {'range': [0, rosa.shape[0]-primav_players(team=sel_team).shape[0]], 'color': "lightgray"},
                        {'range': [rosa.shape[0]-primav_players(team=sel_team).shape[0], rosa.shape[0]], 'color': "gray"}]}))
         st.plotly_chart(n_rosa, use_container_width=True)
+
+        si = sarri_index(team=sel_team)
+        si = si.sort_values(by=['Tit'], ascending=False).rename({'Tit': 'PreFan', 'Voto': 'PreA'})
+        st.metric("Sarri Index", np.var(si['Perc']))
+        st.dataframe(si.sort_values(by=['PreFan'], ascending=False))
     with col11:
         st.write('Distribuzione età')
         st.plotly_chart(go.Figure(data=[go.Histogram(x=rosa['Età'],
@@ -140,13 +145,6 @@ with tab4:
             tit_no=go.Pie(hole=0.5,sort=False,direction='clockwise',values=[stip_seas_ok,stip_seas_ko],
                    labels=["Stip in campo","Stip in panca"],showlegend=False)
             st.plotly_chart(go.FigureWidget(data=tit_no), use_container_width=True)
-        except:
-            st.info("Stagione non ancora iniziata")
-        try:
-            si=sarri_index(team=sel_team)
-            si=si.sort_values(by=['Tit'],ascending=False).rename({'Tit':'PreFan','Voto':'PreA'})
-            st.metric("Sarri Index", np.var(si['Perc']))
-            st.dataframe(si.sort_values(by=['PreFan'],ascending=False))
         except:
             st.info("Stagione non ancora iniziata")
     with col13:
