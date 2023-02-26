@@ -112,7 +112,7 @@ with tab3:
 
         si = sarri_index(team=sel_team)
         si = si.sort_values(by=['Titolarita'], ascending=False).rename({'Titolarita': 'PreFan', 'Voto': 'PreA'})
-        st.metric("Sarri Index", np.round(np.var(si['Perc']),3))
+        st.metric("Sarri Index", np.round(np.var(si['Perc']),3)*100)
         st.write("I più usati")
         st.dataframe(si.head(5))
     with col11:
