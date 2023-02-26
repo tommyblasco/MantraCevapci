@@ -114,7 +114,7 @@ with tab3:
         si = si.sort_values(by=['Titolarita'], ascending=False).rename({'Titolarita': 'PreFan', 'Voto': 'PreA'})
         st.metric("Sarri Index", np.round(np.var(si['Perc']),2))
         st.write("I più usati")
-        st.dataframe(si[:5,:])
+        st.dataframe(si.head(5))
     with col11:
         st.write('Distribuzione età')
         st.plotly_chart(go.Figure(data=[go.Histogram(x=rosa['Età'],
