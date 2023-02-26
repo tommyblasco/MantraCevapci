@@ -111,7 +111,7 @@ with tab3:
         st.plotly_chart(n_rosa, use_container_width=True)
 
         si = sarri_index(team=sel_team)
-        si = si.sort_values(by=['Tit'], ascending=False).rename({'Tit': 'PreFan', 'Voto': 'PreA'})
+        si = si.sort_values(by=['Titolarita'], ascending=False).rename({'Titolarita': 'PreFan', 'Voto': 'PreA'})
         st.metric("Sarri Index", np.var(si['Perc']))
         st.dataframe(si.sort_values(by=['PreFan'], ascending=False))
     with col11:

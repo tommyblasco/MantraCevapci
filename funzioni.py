@@ -629,7 +629,7 @@ def stats_web(df):
 
 def sarri_index(team):
     v=voti_arricchiti()[(voti_arricchiti()['Squadra']==team) & (voti_arricchiti()['Stagione']==stagione_in_corso)]
-    spec=v.groupby('Nome',as_index=False).agg({'Tit':'sum','Voto':'count'})
+    spec=v.groupby('Nome',as_index=False).agg({'Titolarita':'sum','Voto':'count'})
     spec=spec[spec['Voto']>=1]
-    spec['Perc']=[round(x/y,2) for x,y in zip(spec['Tit'],spec['Voto'])]
+    spec['Perc']=[round(x/y,2) for x,y in zip(spec['Titolarita'],spec['Voto'])]
     return spec
