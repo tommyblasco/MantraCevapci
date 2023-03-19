@@ -550,48 +550,23 @@ def update_file_git(df,nome_file,comm_mex):
 
 @st.cache
 def prob_form():
-    page = "https://www.fantacalcio.it/probabili-formazioni-serie-a"
-    page_html = requests.Session().get(page, headers={
-        "User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}).text
-    page_soup = soup(page_html, "html.parser")
-    l = page_soup.find_all('a', {"player-name player-link"})
-    p = page_soup.find_all('div', {'progress-value'})
-    p = [int(x.text.split('%')[0]) for x in p]
+    res = requests.get('https://www.fantacalcio.it/probabili-formazioni-serie-a')
+    page_soup = soup(res.text)
+    groups = page_soup.findAll('ul', attrs={'class': 'player-list'})
 
-    infortunati = []
-    for i in list(range(len(page_soup.find_all('ul', 'injured-list')))):
-        if len(page_soup.find_all('ul', 'injured-list')[i]) > 1:
-            for k in list(range(1, len(page_soup.find_all('ul', 'injured-list')[i].text.split('\n\n')), 3)):
-                infortunati.append(
-                    page_soup.find_all('ul', 'injured-list')[i].text.split('\n\n')[k].split('\n')[-1].strip())
-    squal = []
-    for s in list(range(len(page_soup.find_all('section', 'suspendeds')))):
-        squal.extend(page_soup.find_all('section', 'suspendeds')[s].text.split('\n\n\n\n\n')[1:])
-    squal = [x.split('    \n    ')[1:] for x in squal if 'Nessun calciatore' not in x]
-    squal = [x.split('\n\n\n\n')[0] for sublist in squal for x in sublist]
+    giocatori, prob, squadra, opp = [], [], [], []
+    for i in range(len(groups)):
+        players = groups[i].findAll('a', attrs={'class': 'player-name'})
+        bars = groups[i].findAll('div', attrs={'class': 'progress-bar'})
 
-    diff = []
-    for d in list(range(len(page_soup.find_all('section', 'cautioneds')))):
-        diff.extend(page_soup.find_all('section', 'cautioneds')[d].text.split('\n\n\n\n\n')[1:])
-    diff = [x.split('    \n    ')[1:] for x in diff if 'Nessun calciatore' not in x]
-    diff = [x.split('\n\n\n\n')[0] for sublist in diff for x in sublist]
+        for j in range(len(players)):
+            giocatori.append(players[j].contents[1].contents[0].upper())
+            prob.append(float(bars[j]['aria-valuenow']))
+            squadra.append(players[j]['href'].split('/squadre/')[1].split('/')[0].upper())
 
-    g, sq, link = [], [], []
-    for i in list(range(len(l))):
-        if "Campioncino" not in str(l[i]):
-            g.append(l[i].text.split('\n')[-1].strip())
-            sq.append(l[i]['href'].split('/squadre/')[1].split('/')[0].upper())
-            link.append(l[i]['href'])
+    gs = pd.DataFrame({'Giocatori': giocatori, 'Prob': prob, 'Squadra': squadra})
 
-    dic_count = Counter(g)
-    diff_to_remove = [i for i in diff if dic_count[i] == 1]
-    gs = pd.DataFrame({'Giocatori': g, 'Squadra': sq,'Link':link}).drop_duplicates()
-    gs = gs[
-        (~gs['Giocatori'].isin(infortunati)) & (~gs['Giocatori'].isin(squal)) & (~gs['Giocatori'].isin(diff_to_remove))]
-    gs['Giocatori'] = [x.upper() for x in gs['Giocatori']]
-    gs['Prob'] = p
     gsgrp = gs.groupby('Squadra', sort=False, as_index=False).agg({'Giocatori': 'count'})
-    opp = []
     for i in list(range(gsgrp.shape[0])):
         if (i % 2) == 0:
             opp.extend([gsgrp.iloc[i + 1, 0]] * gsgrp.iloc[i, 1])
