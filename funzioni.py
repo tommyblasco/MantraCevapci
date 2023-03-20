@@ -554,7 +554,7 @@ def prob_form():
     page_soup = soup(res.text)
     groups = page_soup.findAll('ul', attrs={'class': 'player-list'})
 
-    giocatori, prob, squadra, opp = [], [], [], []
+    giocatori, prob, squadra, opp, l = [], [], [], [], []
     for i in range(len(groups)):
         players = groups[i].findAll('a', attrs={'class': 'player-name'})
         bars = groups[i].findAll('div', attrs={'class': 'progress-bar'})
@@ -563,8 +563,9 @@ def prob_form():
             giocatori.append(players[j].contents[1].contents[0].upper())
             prob.append(float(bars[j]['aria-valuenow']))
             squadra.append(players[j]['href'].split('/squadre/')[1].split('/')[0].upper())
+            l.append(players[j]['href'])
 
-    gs = pd.DataFrame({'Giocatori': giocatori, 'Prob': prob, 'Squadra': squadra})
+    gs = pd.DataFrame({'Giocatori': giocatori, 'Prob': prob, 'Squadra': squadra,'Link':l})
 
     gsgrp = gs.groupby('Squadra', sort=False, as_index=False).agg({'Giocatori': 'count'})
     for i in list(range(gsgrp.shape[0])):
