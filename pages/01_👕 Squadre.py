@@ -90,6 +90,14 @@ with tab2:
                 st.dataframe(his_ulmi)
     with st.expander("Precedenti"):
         st.dataframe(precedenti(team=sel_team))
+    with st.expander("Giocatori avversari ispirati"):
+        st.write("Top 5 giocatori più odiati dalla squadra:")
+        vo = voti_arricchiti_opp()[(voti_arricchiti_opp()['Opponent']==sel_team) & (voti_arricchiti_opp()['Titolarita']==1)]
+        vo['Bonus']=[x-y for x,y in zip(vo['FV'],vo['Voto'])]
+        ispirati = vo.groupby('Nome',as_index=False).agg({'Bonus':'sum'}).sort_values(by=['Bonus'],ascending=False)
+        barisp = go.Figure([go.Bar(x=ispirati.iloc[:5, 1], y=ispirati.iloc[:5, 0], orientation='h')])
+        barisp.update_layout(yaxis={'categoryorder': 'total ascending'})
+        st.plotly_chart(barisp, use_container_width=True)
     with st.expander("Le bandiere"):
         st.write('Numero di giorni in squadra')
         msel=mercato[(mercato['A']==sel_team) & (pd.notnull(mercato['TP']))]
