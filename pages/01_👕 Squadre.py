@@ -93,7 +93,7 @@ with tab2:
     with st.expander("Giocatori avversari ispirati"):
         st.write("Top 5 giocatori più odiati dalla squadra:")
         vo = voti_arricchiti_opp()[(voti_arricchiti_opp()['Opponent']==sel_team) & (voti_arricchiti_opp()['Titolarita']==1)]
-        vo['Bonus']=[x-y for x,y in zip(vo['FV'],vo['Voto'])]
+        vo['Bonus']=[a*3+b*3+c*2+d+e for a,b,c,d,e in zip(vo['Gf'],vo['Rp'],vo['Rf'],vo['PInv'],vo['Ass'])]
         ispirati = vo.groupby('Nome',as_index=False).agg({'Bonus':'sum'}).sort_values(by=['Bonus'],ascending=False)
         barisp = go.Figure([go.Bar(x=ispirati.iloc[:5, 1], y=ispirati.iloc[:5, 0], orientation='h')])
         barisp.update_layout(yaxis={'categoryorder': 'total ascending'})
