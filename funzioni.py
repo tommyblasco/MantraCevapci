@@ -96,8 +96,10 @@ def voti_arricchiti():
     return voti_arr
 
 def voti_arricchiti_opp():
-    home_camp = campionato[['Stagione', 'Giornata', 'Home','Away']].rename({'Home':'Squadra','Away':'Opponent','Giornata':'Day'})
-    away_camp = campionato[['Stagione', 'Giornata', 'Away','Home']].rename({'Away':'Squadra','Home':'Opponent','Giornata':'Day'})
+    home_camp = campionato[['Stagione', 'Giornata', 'Home','Away']]
+    away_camp = campionato[['Stagione', 'Giornata', 'Away','Home']]
+    home_camp.rename({'Home':'Squadra','Away':'Opponent','Giornata':'Day'},inplace=True)
+    away_camp.rename({'Home':'Squadra','Away':'Opponent','Giornata':'Day'},inplace=True)
     df = home_camp.append(away_camp)
     df['Giornata']=[x+2 for x in df['Day']]
     df = df.drop('Day', axis=1)
