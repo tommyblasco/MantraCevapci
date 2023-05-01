@@ -301,7 +301,7 @@ def b11(seas,gio):
                     sub=sub[~sub['ID'].isin(selec['ID'])]
                     h=h-1
             count_dup = sum(pd.value_counts(list(filter(None,Bsel['Nome']))).to_frame().reset_index()[0]!=1)
-        f_df=f_df.append(Bsel.iloc[:,:8])
+        f_df=pd.concat([f_df,Bsel.iloc[:,:8]],ignore_index=False)
     bmodglob=f_df.groupby('Modulo',as_index=False).agg({'FV':sum}).sort_values(by=['FV'], ascending=False)
     bmod=bmodglob.head(1)
     f_df.sort_index(inplace=True)
@@ -351,7 +351,7 @@ def pred_b11(df,seas):
                     sub = sub[~sub['ID'].isin(selec['ID'])]
                     h = h - 1
             count_dup = sum(pd.value_counts(list(filter(None, Bsel['Giocatori']))).to_frame().reset_index()[0] != 1)
-        f_df = f_df.append(Bsel.iloc[:, :5])
+        f_df=pd.concat([f_df,Bsel.iloc[:,:5]],ignore_index=False)
     bmodglob = f_df.groupby('Modulo', as_index=False).agg({'Index': sum}).sort_values(by=['Index'], ascending=False)
     bmodglob.reset_index(drop=True, inplace=True)
     bmod = bmodglob.head(1)
