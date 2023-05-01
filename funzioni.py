@@ -202,7 +202,7 @@ def rosa_oggi(team):
     gio_con = pd.merge(giocatori, market_now[['Nome', 'Tipo_operazione', 'TP']], left_on='ID', right_on='Nome',how='inner')
     gio_con_r = pd.merge(gio_con, ruolo[ruolo['Stagione'] == max(ruolo['Stagione'])], left_on='ID', right_on='Nome',how='left')
     gio_con_rq = pd.merge(gio_con_r, quo[quo['Stagione'] == max(quo['Stagione'])], left_on='ID',right_on='NomeQ', how='left')
-    gio_con_rq = gio_con_rq.drop('NomeQ', axis=1).drop('Stagione_y', axis=1).drop('Stagione_x', axis=1)
+    gio_con_rq = gio_con_rq.drop('NomeQ', axis=1).drop('Stagione_y', axis=1).drop('Stagione_x', axis=1).drop('Nome_y', axis=1)
     gio_con_rq.columns = ['ID', 'Nome', 'Data nascita', 'Luogo nascita', 'Nazionalità', 'url', 'Contratto', 'Fine prest',
                            'b', 'Ruolo', 'QI', 'QA', 'Diff', 'VI', 'VA', 'VFA']
     gio_con_rq = gio_con_rq.drop('b', axis=1)
