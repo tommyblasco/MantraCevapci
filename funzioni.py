@@ -394,7 +394,7 @@ def precedenti(team):
     db_casa.columns=['Avversario','V','N','P','GF','GS','Gio']
     db_tras = db_tras[['Home', 'WA','D','WH', 'GA', 'GH','PntA']]
     db_tras.columns = ['Avversario','V','N','P','GF','GS','Gio']
-    db=pd.concat(db_casa,db_tras,ignore_index=True).groupby(['Avversario']).agg({'Gio':'count','V':'sum','N':'sum','P':'sum','GF':'sum','GS':'sum'})
+    db=pd.concat([db_casa,db_tras],ignore_index=True).groupby(['Avversario']).agg({'Gio':'count','V':'sum','N':'sum','P':'sum','GF':'sum','GS':'sum'})
     db['Bilancio']=[x-y for x,y in zip(db['V'],db['P'])]
     return db.sort_values(by=['Bilancio'],ascending=False)
 
