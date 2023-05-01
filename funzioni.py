@@ -100,7 +100,7 @@ def voti_arricchiti_opp():
     away_camp = campionato[['Stagione', 'Giornata', 'Away','Home']]
     home_camp.rename(columns={'Home':'Squadra','Away':'Opponent','Giornata':'Day'},inplace=True)
     away_camp.rename(columns={'Away':'Squadra','Home':'Opponent','Giornata':'Day'},inplace=True)
-    df = home_camp.append(away_camp)
+    df = pd.concat([home_camp,away_camp],ignore_index=True)
     df['Giornata']=[x+2 for x in df['Day']]
     df = df.drop('Day', axis=1)
     v = voti_arricchiti()
@@ -122,7 +122,8 @@ def ranking(seas):
     trasferta=db.groupby(['Away'],as_index=False).agg({'PA':'sum','A':'sum','N':'sum','H':'sum','GA':'sum','GH':'sum','PntA':'sum'})
     casa.columns=['Squadra','Pnt','V','N','P','GF','GS','PntGlob']
     trasferta.columns=['Squadra','Pnt','V','N','P','GF','GS','PntGlob']
-    classifica=casa.append(trasferta).groupby(['Squadra'],as_index=False).agg({'Pnt':'sum','V':'sum','N':'sum','P':'sum','GF':'sum','GS':'sum','PntGlob':'sum'})
+    classifica=pd.concat([casa,trasferta],ignore_index=True).groupby(['Squadra'],as_index=False).agg({'Pnt':'sum','V':'sum','N':'sum','P':'sum','GF':'sum','GS':'sum','PntGlob':'sum'})
+
 
     #penalizzazioni
     def apply_penalty(t,p):
@@ -148,7 +149,7 @@ def class_for_rbc(seas):
     casa.columns=['Squadra','Giornata','Pnt']
     tras = db[['Away', 'Giornata', 'PA']]
     tras.columns = ['Squadra', 'Giornata', 'Pnt']
-    db_tot=casa.append(tras)
+    db_tot=pd.concat([casa,tras],ignore_index=True)
     if seas=='2020-21':
         db_tot.loc[(db_tot['Squadra']=='Agghiaggiande')&(db_tot['Giornata']==1),'Pnt']=db_tot.loc[(db_tot['Squadra']=='Agghiaggiande')&(db_tot['Giornata']==1),'Pnt']-5
     if seas=='2022-23':
@@ -501,7 +502,7 @@ def trattativa(s,day,is1,is2):
                                      'Spesa_A':[0]*pre.shape[0],'Entrata_Da':[0]*pre.shape[0],'Tipo_operazione':['DEF']*pre.shape[0],
                                      'Costo_contratto':[0]*pre.shape[0],'TP':pl_pre['TP']
                                      })
-            new_tratt=new_tratt.append(new_df_pre)
+            new_tratt=pd.concat([new_tratt,new_df_pre],ignore_index=True)
     return new_tratt
 
 def update_tratt(rup):
@@ -513,7 +514,8 @@ def update_tratt(rup):
     df_up_no_pre=df_up[~df_up['Tipo_operazione'].str.contains('PRE')]
     q = pd.merge(quotazioni[quotazioni['Stagione'] == stagione_in_corso],df_up_no_pre[['Nome', 'Da', 'A']], on='Nome', how='inner')
     cash_teams = df_up_no_pre.groupby(['Da', 'A'], as_index=False).agg({'Spesa_A': 'sum'})
-    tot_val = q.groupby(['Da'], as_index=False).agg({'VA': 'sum'}).rename({'VA': 'Spesa_A'}, axis=1).append(cash_teams[['A', 'Spesa_A']].rename({'A': 'Da'}, axis=1)).groupby(['Da'], as_index=False).agg({'Spesa_A': 'sum'}).rename({'Spesa_A': 'Valore'}, axis=1)
+    tot_val = q.groupby(['Da'], as_index=False).agg({'VA': 'sum'}).rename({'VA': 'Spesa_A'}, axis=1)
+    tot_val = pd.concat([tot_val,cash_teams[['A', 'Spesa_A']].rename({'A': 'Da'}, axis=1)],ignore_index=True).groupby(['Da'], as_index=False).agg({'Spesa_A': 'sum'}).rename({'Spesa_A': 'Valore'}, axis=1)
     df1 = pd.merge(q[['Da', 'A', 'Nome', 'VA']], cash_teams[['Da', 'Spesa_A']], left_on='A', right_on='Da',how='left').drop('Da_y', axis=1).rename({'Da_x': 'Da'}, axis=1)
     df1 = pd.merge(df1, tot_val, on='Da', how='left')
     df1 = pd.merge(df1, tot_val, right_on='Da', left_on='A', how='left').drop('Da_y', axis=1).rename({'Da_x': 'Da'},axis=1)
@@ -525,7 +527,7 @@ def update_tratt(rup):
         quotazioni.loc[(quotazioni['Nome']==df_up_no_pre.iloc[i,4]) & (quotazioni['Stagione']==stagione_in_corso), 'VA'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
         quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VI'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
         quotazioni.loc[(quotazioni['Nome'] == df_up_no_pre.iloc[i, 4]) & (quotazioni['Stagione'] == stagione_in_corso), 'VFA'] = math.ceil(r.iloc[0,7]/0.05)*0.05 if math.ceil(r.iloc[0,7]/0.05)*0.05>0.05 else 0.05
-    mark=m.append(rup).sort_values('Data')
+    mark=pd.concat([m,rup],ignore_index=False).sort_values('Data')
     return [quotazioni, mark]
 
 def indennizzo(s,day,da,player):
@@ -536,7 +538,7 @@ def indennizzo(s,day,da,player):
     info_ind=pd.DataFrame({'Stagione':[s],'Data':[day],'Da':[da],'Nome':[player],'Spesa_A':[0],'Entrata_Da':[ind],'Tipo_operazione':['IND']})
     max_tp = max(m.loc[m['Nome'] == player, 'TP'])
     m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = info_ind.iloc[0, 1]
-    mark=m.append(info_ind).sort_values('Data')
+    mark=pd.concat([m,info_ind],ignore_index=True).sort_values('Data')
     return mark
 
 def svincolo(s,day,team,player,pre_svi):
@@ -544,7 +546,7 @@ def svincolo(s,day,team,player,pre_svi):
     info_svi=pd.DataFrame({'Stagione':[s],'Data':[day],'Da':[team],'A':[team],'Nome':[player],'Spesa_A':[pre_svi],'Entrata_Da':[0],'Tipo_operazione':['SVI']})
     max_tp = max(m.loc[m['Nome'] == player, 'TP'])
     m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = info_svi.iloc[0, 1]
-    mark = m.append(info_svi).sort_values('Data')
+    mark = pd.concat([m,info_svi],ignore_index=True).sort_values('Data')
     return mark
 
 def rinnovo(s,day,team,player,l_rin):
@@ -553,7 +555,7 @@ def rinnovo(s,day,team,player,l_rin):
     info_rin=pd.DataFrame({'Stagione':[s],'Data':[day],'A':[team],'Nome':[player],'Spesa_A':[lista_spe_rin[l_rin-1]],'Entrata_Da':[0],'Tipo_operazione':['RIN']})
     max_tp = max(m.loc[m['Nome'] == player, 'TP'])
     m.loc[(m['Nome'] == player) & (m['TP'] == max_tp), 'TP'] = date(int(stagione_in_corso[:4])+l_rin,6,30)
-    mark = m.append(info_rin).sort_values('Data')
+    mark = pd.concat([m,info_rin],ignore_index=True).sort_values('Data')
     return mark
 
 def update_file_git(df,nome_file,comm_mex):
