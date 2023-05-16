@@ -300,7 +300,10 @@ def b11(seas,gio):
                         Bsel.loc[Bsel.shape[0]]=['','','',0,g,s,'',Bsel.iloc[0,7],'']
                     sub=sub[~sub['ID'].isin(selec['ID'])]
                     h=h-1
-            count_dup = sum(pd.value_counts(list(filter(None,Bsel['Nome']))).to_frame().reset_index()[0]!=1)
+            try:
+                count_dup = sum(pd.value_counts(list(filter(None,Bsel['Nome']))).to_frame().reset_index()[0]!=1)
+            except:
+                count_dup=0
         f_df=pd.concat([f_df,Bsel.iloc[:,:8]],ignore_index=False)
     bmodglob=f_df.groupby('Modulo',as_index=False).agg({'FV':sum}).sort_values(by=['FV'], ascending=False)
     bmod=bmodglob.head(1)
