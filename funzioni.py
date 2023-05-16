@@ -286,7 +286,7 @@ def b11(seas,gio):
         sub=f2[~f2['ID'].isin(Bsel['ID'])]
         while Bsel.shape[0]<11:
             Bsel.loc[Bsel.shape[0]]=['','','',0,g,s,'',Bsel.iloc[0,7],'']
-        count_dup = sum(pd.value_counts(list(filter(None,Bsel['Nome']))).to_frame().reset_index()[0]!=1)
+        count_dup = len(set([x for x in Bsel['Nome'] if list(Bsel['Nome']).count(x)>1 and x is not None]))
         while count_dup!=0:
             for nn in list(filter(None,list(set(Bsel['Nome'])))):
                 h=Bsel[Bsel['Nome']==nn].shape[0]
@@ -300,10 +300,7 @@ def b11(seas,gio):
                         Bsel.loc[Bsel.shape[0]]=['','','',0,g,s,'',Bsel.iloc[0,7],'']
                     sub=sub[~sub['ID'].isin(selec['ID'])]
                     h=h-1
-            try:
-                count_dup = sum(pd.value_counts(list(filter(None,Bsel['Nome']))).to_frame().reset_index()[0]!=1)
-            except:
-                count_dup=0
+            count_dup = len(set([x for x in Bsel['Nome'] if list(Bsel['Nome']).count(x)>1 and x is not None]))
         f_df=pd.concat([f_df,Bsel.iloc[:,:8]],ignore_index=False)
     bmodglob=f_df.groupby('Modulo',as_index=False).agg({'FV':sum}).sort_values(by=['FV'], ascending=False)
     bmod=bmodglob.head(1)
@@ -338,7 +335,7 @@ def pred_b11(df,seas):
         sub = f2[~f2['ID'].isin(Bsel['ID'])]
         while Bsel.shape[0] < 11:
             Bsel.loc[Bsel.shape[0]] = ['', '', '', 0, Bsel.iloc[0, 4], '']
-        count_dup = sum(pd.value_counts(list(filter(None, Bsel['Giocatori']))).to_frame().reset_index()[0] != 1)
+        count_dup = len(set([x for x in Bsel['Giocatori'] if list(Bsel['Giocatori']).count(x)>1 and x is not None]))
         while count_dup != 0:
             for nn in list(filter(None, list(set(Bsel['Giocatori'])))):
                 h = Bsel[Bsel['Giocatori'] == nn].shape[0]
@@ -353,7 +350,7 @@ def pred_b11(df,seas):
                         Bsel.loc[Bsel.shape[0]] = ['', '', '', 0, Bsel.iloc[0, 4], '']
                     sub = sub[~sub['ID'].isin(selec['ID'])]
                     h = h - 1
-            count_dup = sum(pd.value_counts(list(filter(None, Bsel['Giocatori']))).to_frame().reset_index()[0] != 1)
+            count_dup = len(set([x for x in Bsel['Giocatori'] if list(Bsel['Giocatori']).count(x)>1 and x is not None]))
         f_df=pd.concat([f_df,Bsel.iloc[:,:5]],ignore_index=False)
     bmodglob = f_df.groupby('Modulo', as_index=False).agg({'Index': sum}).sort_values(by=['Index'], ascending=False)
     bmodglob.reset_index(drop=True, inplace=True)
