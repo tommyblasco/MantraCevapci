@@ -133,6 +133,8 @@ def ranking(seas):
         apply_penalty('Agghiaggiande',5)
     elif seas=='2022-23':
         apply_penalty('Olympique Bidet',1)
+    elif seas=='2023-24':
+        apply_penalty('Los Angeles',4)
 
     classifica=classifica.sort_values(by=['Pnt','PntGlob'],ascending=False)
     classifica.insert(0,'Pos',list(range(1,11)))
